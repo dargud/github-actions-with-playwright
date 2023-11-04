@@ -1,0 +1,20 @@
+{
+  "name": "github-actions-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "tests:all-0": "playwright test example-0.spec.ts --config=playwright.config.ts --reporter=html",
+    "tests:all-1": "playwright test example-1.spec.ts --config=playwright.config.ts --reporter=html"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.39.0",
+    "@types/node": "^20.8.10"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1"
+  }
+}
