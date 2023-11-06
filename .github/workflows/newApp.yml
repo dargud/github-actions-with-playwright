@@ -1,4 +1,4 @@
-name: example-1
+name: Playwright Tests, New app
 on:
   push:
     branches: [ main ]
@@ -17,8 +17,8 @@ jobs:
       run: npm ci
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
-    - name: Run Playwright tests
-      run: npm run tests:all-1
+    - name: Run Playwright tests, New app
+      run: npm run tests:new
     - uses: actions/upload-artifact@v3
       if: always()
       with:
