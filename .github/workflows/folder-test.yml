@@ -6,7 +6,7 @@ on:
     branches: [ main ]
 defaults:
     run:
-        working-directory: e2e-pd
+        working-directory: e2e/pd
 jobs:
   test:
     timeout-minutes: 60
