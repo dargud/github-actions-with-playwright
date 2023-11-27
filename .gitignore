@@ -1,0 +1,19 @@
+# Auth
+package-lock.json
+.env
+
+# Dependency directory
+node_modules
+yarn.lock
+yarn-error.log
+
+# Editors
+.vscode
+*.iml
+
+#results
+test-results
+results.xml
+
+tsconfig.tsbuildinfo
+garbage

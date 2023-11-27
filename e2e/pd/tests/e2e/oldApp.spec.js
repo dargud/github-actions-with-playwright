@@ -14,8 +14,8 @@ test.describe('Smoke test suite, without logged in user', () => {
         let onLearnPage = new LearnPage (page);
 
         //Prepare the page for tests:
-        await page.goto('https://learn.unity.com');
-        await expect(page).toHaveURL('https://learn.unity.com');
+        await page.goto(process.env.URL);
+        await expect(page).toHaveURL(process.env.URL);
         await onLearnPage.clickDismissButton();
         await onLearnPage.isMessageDisplayed('Welcome to Unity Learn');
     });

@@ -1,6 +1,5 @@
 import { expect, request, test } from '@playwright/test';
 import { PDDetailPage } from '../../page-objects/newApp/PDDetailPage'
-import { MailslurpWidget } from '../../Widgets/MailslurpWidget';
 import { LoginPage } from '../../page-objects/LoginPage';
 import { MailSlurp } from 'mailslurp-client';
 
@@ -65,8 +64,6 @@ test.describe('New web app Smoke suite', () => {
         const loginPage = new LoginPage(page);
         
         // Create test email
-        // const testEmail = new MailslurpWidget(apiKey);
-
         const mailslurp = new MailSlurp({ apiKey });
         const { id, emailAddress } = await mailslurp.createInbox();
 
@@ -77,18 +74,11 @@ test.describe('New web app Smoke suite', () => {
         user.email = emailAddress;
         user.password = 'Qwerty1!';
 
-        // const mailslurp = new MailSlurp({ apiKey });
-        // email = await testEmail.createEmail();
-        // user.id = email.id
-        // user.email = email.address;
-        // user.password = 'Qwerty1!';
-
         console.log(email);
         console.log(user);
         // email = {
         //     id: 'b1c4df71-83b3-4f80-9b6b-f6f848fd7c13',
         //     address: 'b1c4df71-83b3-4f80-9b6b-f6f848fd7c13@mailslurp.com',
-            
         // };
 
         // Login to get an Admin idToken

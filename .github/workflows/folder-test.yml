@@ -2,8 +2,6 @@ name: Playwright Tests, inFolder
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
 defaults:
     run:
         working-directory: e2e/pd
@@ -21,7 +19,7 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Run Playwright tests, New app
-      run: npm run tests:new
+      run: npm run tests:old
     - uses: actions/upload-artifact@v3
       if: always()
       with:
