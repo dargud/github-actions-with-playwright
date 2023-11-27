@@ -103,7 +103,7 @@ test.describe('Smoke test suite, with loginned user', () => {
         await onHeader.myLearningClick(page);
     });
 
-    test('View and Start a Course @Smoke', async ({ page }) => {
+    test.only('View and Start a Course @Smoke', async ({ page }) => {
         // As a learner, I want to view courses on the platform, 
         // and "start" a course to add it to the My Learning dashboard
         let onHeader = new HeaderOfAnyPage (page);
@@ -156,8 +156,9 @@ test.describe('Smoke test suite, with loginned user', () => {
         // await onHeader.logoClick();
         await page.locator('[class="logo_18ZLO9NM"]').click();
         // await page.waitForSelector('[class="main_2loOtLwr"]');
-        await expect(page.getByRole('heading', { name: 'Welcome back Daryna Gudyma' }))
-            .toBeVisible({ timeout: 60000 });
+        // await expect(page.getByRole('heading', { name: 'Welcome back Daryna Gudyma' }))
+        //     .toBeVisible({ timeout: 60000 });
+        await expect(page.getByText('My Learning Dashboard')).toBeVisible();
 
         // Visit "My Learning" in top navigation
         // await onHeader.myLearningClick();

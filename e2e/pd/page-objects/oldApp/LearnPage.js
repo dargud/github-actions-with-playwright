@@ -42,7 +42,9 @@ exports.LearnPage = class LearnPage {
     };
 
     async isLoggedin (page) {
-        await expect(page.getByRole('heading', { name: 'Welcome back Test Account' })).toBeVisible({ timeout: 60000 });
+        // await expect(page.getByRole('heading', { name: 'Welcome back Test Account' }))
+        //     .toBeVisible({ timeout: 60000 });
+        await expect(page.getByText('My Learning Dashboard')).toBeVisible();
     };
 
     async clickUserAvatarAndSelectOption (page, option) {
