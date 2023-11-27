@@ -42,7 +42,7 @@ exports.LearnPage = class LearnPage {
     };
 
     async isLoggedin (page) {
-        await expect(page.getByRole('heading', { name: 'Welcome back Daryna Gudyma' })).toBeVisible({ timeout: 60000 });
+        await expect(page.getByRole('heading', { name: 'Welcome back Test Account' })).toBeVisible({ timeout: 60000 });
     };
 
     async clickUserAvatarAndSelectOption (page, option) {
