@@ -9,6 +9,8 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    env:
+      URLPROD: ${{secrets.URLPROD}}
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
