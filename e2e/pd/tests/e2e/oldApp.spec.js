@@ -103,7 +103,7 @@ test.describe('Smoke test suite, with loginned user', () => {
         await onHeader.myLearningClick(page);
     });
 
-    test.only('View and Start a Course @Smoke', async ({ page }) => {
+    test('View and Start a Course @Smoke', async ({ page }) => {
         // As a learner, I want to view courses on the platform, 
         // and "start" a course to add it to the My Learning dashboard
         let onHeader = new HeaderOfAnyPage (page);
