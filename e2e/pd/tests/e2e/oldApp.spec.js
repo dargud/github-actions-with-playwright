@@ -9,51 +9,146 @@ import { AllPathwaysPage } from '../../page-objects/oldApp/AllPathwaysPage.js';
 import { SinglePathwayPage } from '../../page-objects/oldApp/SinglePathwayPage.js';
 
 test.describe('Smoke test suite, without logged in user', () => { 
-    test.beforeEach(async ({ page }) => {
-        test.slow(); //Delete after page performance improvements 
-        let onLearnPage = new LearnPage (page);
+    const baseUrl = {
+        "devLogin": "",
+        "stageLogin": "",
+        "prodLogin": "https://learn.unity.com"
+    };
 
-        //Prepare the page for tests:
-        await page.goto(process.env.URLPROD);
-        await expect(page).toHaveURL(process.env.URLPROD);
-        await onLearnPage.clickDismissButton();
-        await onLearnPage.isMessageDisplayed('Welcome to Unity Learn');
+    test.beforeEach(async ({ page }) => {
+        test.slow(); // Delete after page performance improvements 
+
+        // Prepare the page for tests:
+        await page.goto(baseUrl.prodLogin);
+        await expect(page).toHaveURL(baseUrl.prodLogin);
+        await page.waitForSelector('[class="modal-content_9glg7cIJ"]');
+    });
+    
+    test('User can open the main page', async({ page }) => {
+        // Covered by beforeEach hook
+    }); 
+
+    test('User can see a tutorial', async({ page }) => {
+        test.slow(); // Delete after page performance improvements 
+
+        await expect(page.locator('[class="modal-content_9glg7cIJ"]').first())
+            .toBeVisible();
+    });
+
+    test('User can start a tutorial', async({ page }) => {
+        test.slow(); // Delete after page performance improvements 
+
+        await expect(page.locator('[class="modal-content_9glg7cIJ"]').first())
+            .toBeVisible();
+        await page.click('[label="Start tour"]');
+        await expect(page.locator('[class="tour-tip_1vuaneTW tour-tip-bottomRight_2vZRhVsO tour-tip-normal"]'))
+            .toBeVisible();
+    });
+
+    test('User can cancel a tutorial', async({ page }) => {
+        test.slow(); // Delete after page performance improvements 
+
+        await expect(page.locator('[class="modal-content_9glg7cIJ"]').first())
+            .toBeVisible();
+        await page.click('[label="Dismiss"]');
+        await expect(page.getByText('Welcome to Unity Learn'))
+            .toBeVisible();
+    });
+
+    test('User can open Pathways page', async ({ page }) => {
+        test.slow(); // Delete after page performance improvements 
+
+        // Close the Tutorial
+        await expect(page.locator('[class="modal-content_9glg7cIJ"]').first())
+            .toBeVisible();
+        await page.click('[label="Dismiss"]');
+
+        // Open the Pathways page
+        await page.click('[href="/pathways"]');
+        await expect(page).toHaveURL('https://learn.unity.com/pathways');
+    });
+
+    test('User can browse by Topic', async ({ page }) => {
+        test.slow(); // Delete after page performance improvements 
+
+        // Close the Tutorial
+        await expect(page.locator('[class="modal-content_9glg7cIJ"]').first())
+            .toBeVisible();
+        await page.click('[label="Dismiss"]');
+        
+        // Open the Browse dropdown
+        await page.getByRole('button', { name: 'Browse' }).click();
+        await expect(page.locator('[class="browses-container_2-zC2B4X"]')).toBeVisible();
+
+        // Open the Editor Essentials
+        await page.getByRole('link', { name:  'Editor Essentials' })
+            .first()
+            .click();
+        await expect(page).toHaveURL('https://learn.unity.com/search?k=%5B%22tag%3A5d351f0a7fbf7d006af48181%22%5D');
+    });
+
+    test('User can browse by Content type', async ({ page }) => {
+        test.slow(); // Delete after page performance improvements 
+
+        // Close the Tutorial
+        await expect(page.locator('[class="modal-content_9glg7cIJ"]').first())
+            .toBeVisible();
+        await page.click('[label="Dismiss"]');
+        
+        // Open the Browse dropdown
+        await page.getByRole('button', { name: 'Browse' }).click();
+        await expect(page.locator('[class="browses-container_2-zC2B4X"]')).toBeVisible();
+
+        // Open the Courses
+        await page.click('[href="/courses"]');
+        await expect(page).toHaveURL('https://learn.unity.com/courses');
+    });
+
+    test('User can open Live calendar page', async ({ page }) => {
+        test.slow(); // Delete after page performance improvements 
+
+        // Close the Tutorial
+        await expect(page.locator('[class="modal-content_9glg7cIJ"]').first())
+            .toBeVisible();
+        await page.click('[label="Dismiss"]');
+        
+        // Open the Live calendar page
+        await page.click('[href="/live-calendar"]');
+        await expect(page).toHaveURL('https://learn.unity.com/live-calendar');
     });
 
     test('Browse and Search for Content @Smoke', async ({ page }) => {
         // As a learner, I can browse content, browse topics, and search.
 
         test.slow(); //Delete after page performance improvements 
-        let onLearnPage = new LearnPage (page);
-        let onHeader = new HeaderOfAnyPage (page);
         let onSearchResultsPage = new SearchResultsPage (page);
 
         // Load https://learn.unity.com
         // A part of beforeEach hook
 
-        // Scroll down to Featured Content and click on a card
-        // await onLearnPage.openFeaturedContentPage(page);
+        // Close the Tutorial
+        await expect(page.locator('[class="modal-content_9glg7cIJ"]').first())
+            .toBeVisible();
+        await page.click('[label="Dismiss"]');
 
-        // const contentName = await page.locator('.slider-title')
-        //     .first()
-        //     .textContent();
-        await page.locator('[aria-label="carousel"]').click();
-        // const contentPageName = await page.locator('h1').textContent();
-        // await expect(contentPageName).toContain(contentName);
+        // Scroll down to Featured Content and click on a card
+        // This step isn't actual now
 
         // Select Browse from top navigation and choose a topic (e.g. Scripting)
-        // await onHeader.clickBrowseAndSelectItem(page, 'Scripting');
-
         // Open the Browse menu
-        await page.getByRole('button', { name: 'Browse' }).click();
-        await expect(page.locator('[class="browses-container_2-zC2B4X"]')).toBeVisible();
+        await page.getByRole('button', { name: 'Browse' })
+            .click();
+        await expect(page.locator('[class="browses-container_2-zC2B4X"]'))
+            .toBeVisible();
 
         // Open the Scripting page
         await page.getByRole('link', { name:  'Scripting' })
             .first()
             .click();
-        await expect(page.getByRole('searchbox', { name: 'What do you want to learn?' })).toBeVisible();
-        await expect(page.url()).toContain('https://learn.unity.com/search?k=%5B%22tag%3A5814655a090915001868ebec%22%5D');
+        await expect(page.getByRole('searchbox', { name: 'What do you want to learn?' }))
+            .toBeVisible();
+        await expect(page.url())
+            .toContain('https://learn.unity.com/search?k=%5B%22tag%3A5814655a090915001868ebec%22%5D');
 
         // Un-select topic from drop-down menu, type "Cinemachine" into keyword field, 
         // and press return
@@ -70,21 +165,32 @@ test.describe('Smoke test suite, without logged in user', () => {
     });
 });
 
-test.describe('Smoke test suite, with loginned user', () => {
+test.describe.skip('Smoke test suite, with loginned user', () => { // Skipped because of 2FA block
+    const baseUrl = {
+        "devLogin": "",
+        "stageLogin": "",
+        "prodLogin": process.env.OLD_LOGIN_URL
+    };
+    
+    const user = {
+        'email': process.env.OLD_TEST_USER_EMAIL,
+        'password': process.env.OLD_TEST_USER_PASS
+    };
+
     test.beforeEach(async ({ page }) => {
-        test.slow(); //Delete after page performance improvements 
+        test.slow(); // Delete after page performance improvements 
         let onLearnPage = new LearnPage (page);
 
         //Prepare the page for the login:
-        await page.goto('https://learn.unity.com');
-        await expect(page).toHaveURL('https://learn.unity.com');
+        await page.goto(baseUrl.prodLogin);
+        await expect(page).toHaveURL(baseUrl.prodLogin);
         await onLearnPage.clickDismissButton();
         await onLearnPage.isMessageDisplayed('Welcome to Unity Learn');
         await onLearnPage.clickSigninButton();
 
         //Work with the login iFrame:
-        await onLearnPage.addEmail('daryna.gudyma@unity3d.com');
-        await onLearnPage.addPassword('Cartier1992');
+        await onLearnPage.addEmail(user.email);
+        await onLearnPage.addPassword(user.password);
         await onLearnPage.confirmLogin();
         await onLearnPage.isLoggedin(page);
     });
@@ -156,9 +262,8 @@ test.describe('Smoke test suite, with loginned user', () => {
         // await onHeader.logoClick();
         await page.locator('[class="logo_18ZLO9NM"]').click();
         // await page.waitForSelector('[class="main_2loOtLwr"]');
-        // await expect(page.getByRole('heading', { name: 'Welcome back Daryna Gudyma' }))
-        //     .toBeVisible({ timeout: 60000 });
-        await expect(page.getByText('My Learning Dashboard')).toBeVisible();
+        await expect(page.getByRole('heading', { name: 'Welcome back Daryna Gudyma' }))
+            .toBeVisible({ timeout: 60000 });
 
         // Visit "My Learning" in top navigation
         // await onHeader.myLearningClick();
@@ -171,7 +276,9 @@ test.describe('Smoke test suite, with loginned user', () => {
             .first()
             .click();
         await page.waitForSelector('[class="item-card_39fK3ctv"]');
-        await page.locator('[class="item-card_39fK3ctv"]').first().click();
+        await page.locator('[class="item-card_39fK3ctv"]')
+            .first()
+            .click();
         await page.locator('button[label="Mark step as incomplete"]')
             .first()
             .click();
@@ -466,7 +573,7 @@ test.describe('Smoke test suite, with loginned user', () => {
 
         // If a pathway is not started, navigate to a pathway and click "Start Pathway"
         // await onHeader.pathwaysClick();
-        await page.getByRole('link', {name: 'Pathways'}).click();
+        await page.getByRole('link', { name: 'Pathways', exact: true }).click();
         await expect(page).toHaveURL('https://learn.unity.com/pathways');
 
         // Select a content set within the mission and click "start mission"
