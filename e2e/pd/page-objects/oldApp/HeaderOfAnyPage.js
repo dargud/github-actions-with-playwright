@@ -1,7 +1,8 @@
 import { Locator, Page, expect } from "@playwright/test"
 
-exports.HeaderOfAnyPage = class HeaderOfAnyPage {
+export class HeaderOfAnyPage {
     constructor (page) {
+        this.page = page;
         this.searchInput = page.getByPlaceholder('What do you want to learn?');
         this.browseDropdownButton = page.getByRole('button', { name: 'Browse' });
     }
@@ -37,13 +38,16 @@ exports.HeaderOfAnyPage = class HeaderOfAnyPage {
         await expect(txt).toHaveText('What do you want to learn?');
     };
 
-    async myLearningClick (page) {
-        await expect(page.getByRole('link', { name: 'My Learning', exact: true }).first()).toBeVisible();
-        await page.getByRole('link', { name: 'My Learning', exact: true }).first().click();
-        await expect(page.locator('[class="tab-inner_2o0yL8MG"]')
+    async myLearningClick () {
+        // await expect(this.page.locator('[href="/u/65624910edbc2a48dcdc7617"]')
+        //     .filter({ hasText: 'My Learning'}))
+        //     .toBeVisible();
+        await this.page.locator('[href="/u/65624910edbc2a48dcdc7617"]')
+            .click();
+        await expect(this.page.locator('[class="tab-inner_2o0yL8MG"]')
             .filter({ hasText: 'Activity' }))
             .toBeVisible();
-        await expect(await page.url()).toContain('https://learn.unity.com/u/6464cee2edbc2a02144973d5');
+        await expect(await this.page.url()).toContain('https://learn.unity.com/u/6464cee2edbc2a02144973d5');
     };
 
     async logoClick () {

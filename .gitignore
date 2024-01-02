@@ -12,6 +12,7 @@ yarn-error.log
 *.iml
 
 #results
+playwright-report
 test-results
 results.xml
 

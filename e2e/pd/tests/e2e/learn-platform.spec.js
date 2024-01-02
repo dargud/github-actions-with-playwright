@@ -2,28 +2,29 @@ import { expect, request, test } from '@playwright/test';
 import { PDDetailPage } from '../../page-objects/newApp/PDDetailPage'
 import { LoginPage } from '../../page-objects/LoginPage';
 import { MailSlurp } from 'mailslurp-client';
+import { MailslurpWidget } from '../../Widgets/MailslurpWidget';
 
 test.describe('New web app Smoke suite', () => {
     const baseUrl = {
-        "dev": "https://learn-backend-4fovaspuqa-uc.a.run.app",
-        "stage": "https://connect-staging.unity.com/api/ed-pd",
-        "devLogin": "https://connect-int.unity.com/ed-pd/login",
-        "stageLogin": "https://connect-staging.unity.com/ed-pd/login"
+        "dev": process.env.BASE_URL_DEV,
+        "stage": process.env.BASE_URL_STG,
+        "devLogin": process.env.LOGIN_URL_DEV,
+        "stageLogin": process.env.LOGIN_URL_STG
     };
 
     const key = {
-        "dev": "AIzaSyCl97WXU2Vm2LoZG5oLoD8AM633WuueK6Q",
-        "stage": "AIzaSyAGqMm9jenpsQsL0xc7SS5C6EO51_66QYg"
+        "dev": process.env.GOOGLE_API_KEY_DEV,
+        "stage": process.env.GOOGLE_API_KEY_STG
     };
 
     const origin = {
-        "dev": "https://connect-int.unity.com",
-        "stage": "https://connect-staging.unity.com"
+        "dev": process.env.ORIGIN_DEV,
+        "stage": process.env.ORIGIN_STG
     };
 
     const adminCredentials = {
-        "email": "admin@unity3d.com",
-        "password": "v665mBU,%MgxJbt"
+        "email": process.env.ADMIN_EMAIL,
+        "password": process.env.ADMIN_PASS
     };
 
     // Test email template
@@ -35,18 +36,18 @@ test.describe('New web app Smoke suite', () => {
     // Test user
     let user = {
         'id': '',
-        'email': 'anxhelosako+3@gmail.com',
+        'email': process.env.TEST_USER_EMAIL,
         'fullName': 'e2e test user',
-        'password': 'Anxhelo21'
+        'password': process.env.TEST_USER_PASS
     };
 
     // Organisation and course data
-    const organizationID = "8f20761f-e00e-4ff5-bab3-d761bb095f60";
-    const pathId = 1;
-    const podId = 1;
+    const organizationID = process.env.ORGANIZATION_ID;
+    const pathId = process.env.PATH_ID;
+    const podId = process.env.POD_ID;
 
     // Test email data
-    const apiKey = 'e2efa88c55e5fac9266624cd19e3d65356509d4a26dfb6fa100fffdb50688fa7';
+    const apiKey = process.env.SLURP_API_KEY;
 
     test.beforeEach(async({ page }) => {
         const loginPage = new LoginPage(page);
@@ -60,7 +61,7 @@ test.describe('New web app Smoke suite', () => {
         await page.close();
     });
 
-    test('API: create a new user', async({ page, request }) => { // TODO: move to the BeforeAll hook
+    test.skip('API: create a new user', async({ page, request }) => { // TODO: move to the BeforeAll hook
         const loginPage = new LoginPage(page);
         
         // Create test email
@@ -74,12 +75,8 @@ test.describe('New web app Smoke suite', () => {
         user.email = emailAddress;
         user.password = 'Qwerty1!';
 
-        console.log(email);
-        console.log(user);
-        // email = {
-        //     id: 'b1c4df71-83b3-4f80-9b6b-f6f848fd7c13',
-        //     address: 'b1c4df71-83b3-4f80-9b6b-f6f848fd7c13@mailslurp.com',
-        // };
+        // console.log(email);
+        // console.log(user);
 
         // Login to get an Admin idToken
         const responseSecondStep = await request.post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${key.stage}`, {
@@ -110,10 +107,9 @@ test.describe('New web app Smoke suite', () => {
             }
         });
         expect(responseUserData.status()).toBe(201);  
-        const responseBodyUserData = await responseUserData.json();
-        const userId = responseBodyUserData.id;
-        console.log(userId)
-        // const userId = '6547d750526fa62a6320af04'; 
+        // const responseBodyUserData = await responseUserData.json();
+        // const userId = responseBodyUserData.id;
+        // console.log('userID: ' + userId)
 
         // Add entitlements
         const responseEntitlementData = await request.post(`${baseUrl.stage}/entitlements/${pathId}/assign-to-user`, {
@@ -151,8 +147,8 @@ test.describe('New web app Smoke suite', () => {
         expect(responsePodData.status()).toBe(200);
 
         // Login to create a password and get confirmation link
-        // await loginPage.open(baseUrl.stageLogin);
-        // await loginPage.sendConfirmationLinkFor(user);
+        await loginPage.open(baseUrl.stageLogin);
+        await loginPage.sendConfirmationLinkFor(user);
         await page.goto(baseUrl.stageLogin);
         await page.waitForSelector('[id="ui-sign-in-email-input"]');
         await page.fill('[id="ui-sign-in-email-input"]', user.email);
@@ -163,16 +159,18 @@ test.describe('New web app Smoke suite', () => {
         await page.click('button[type="submit"]');
 
         // Get the confirmation link
-        const emailData = await mailslurp.waitForLatestEmail(email.id);
-        const body = emailData.body; 
-        const emailConfirmationLink = body.match(/https?:\/\/(\.)?\b([-a-zA-Z0-9()@:%_\+.~#?&//=;]*)/)[0]; 
-        console.log(body);
-        console.log("The extracted URL: " + emailConfirmationLink);
+        let emailData = await mailslurp.waitForLatestEmail(email.id);
 
-        // const link = await testEmail.extractConfirmationLink(email.id);
+        const body = emailData.body; 
+        const extractedLink = body.match(/https?:\/\/(\.)?\b([-a-zA-Z0-9()@:%_\+.~#?&//=;]*)/)[0]; 
+        const emailConfirmationLink = extractedLink.replace(/amp;/g, '');
+        // console.log(body);
+        // console.log("The URL before: " + extractedLink);
+        // console.log("The URL after: " + emailConfirmationLink);
+
         // Confirm account
         await page.goto(emailConfirmationLink);
-        // await loginPage.confirmAccount(link);
+        await expect(page.getByText('Thank you for verifying your account')).toBeVisible();
     });
 
     test('The user can sign in with all valid data', async({ page }) => {
@@ -232,7 +230,7 @@ test.describe('New web app Smoke suite', () => {
         // I don't know how to get this state for the testing porpose
     });
 
-    test.skip('The user can see a week status: Not complete', async({ page }) => {
+    test('The user can see a week status: Not complete', async({ page }) => {
         await expect(page.locator('[class="h-fit rounded-xl border px-4 text-sm border-error-extraDark bg-error-extraLight text-error-extraDark"]').first())
             .toBeVisible();
     });
@@ -241,7 +239,7 @@ test.describe('New web app Smoke suite', () => {
         // I don't know how to get this state for the testing porpose
     });
 
-    test.skip('The user can see a week status: Completed', async({ page }) => {
+    test('The user can see a week status: Completed', async({ page }) => {
         await expect(page.locator('[class="h-fit rounded-xl border px-4 text-sm border-success-extraDark bg-success-extraLight text-success-extraDark"]').first())
             .toBeVisible();
     });
@@ -253,5 +251,3 @@ test.describe('New web app Smoke suite', () => {
         // - Quiz answers to pass it
     });
 });
-
-                      

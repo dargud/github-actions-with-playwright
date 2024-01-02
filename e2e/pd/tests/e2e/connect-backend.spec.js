@@ -12,7 +12,7 @@ test.describe('Smoke test suite, without logged in user', () => {
     const baseUrl = {
         "devLogin": "",
         "stageLogin": "",
-        "prodLogin": "https://learn.unity.com"
+        "prodLogin": process.env.OLD_LOGIN_URL
     };
 
     test.beforeEach(async ({ page }) => {
@@ -165,7 +165,7 @@ test.describe('Smoke test suite, without logged in user', () => {
     });
 });
 
-test.describe.skip('Smoke test suite, with loginned user', () => { // Skipped because of 2FA block
+test.describe('Smoke test suite, with loginned user', () => { // Skipped because of 2FA block
     const baseUrl = {
         "devLogin": "",
         "stageLogin": "",
@@ -206,7 +206,7 @@ test.describe.skip('Smoke test suite, with loginned user', () => { // Skipped be
         // ~ The part above is covered by before each hook ~
 
         // Visit "My Learning" in top navigation
-        await onHeader.myLearningClick(page);
+        await onHeader.myLearningClick();
     });
 
     test('View and Start a Course @Smoke', async ({ page }) => {
