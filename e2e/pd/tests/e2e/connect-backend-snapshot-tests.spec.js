@@ -1,8 +1,4 @@
 import { test, expect } from "@playwright/test";
-import { LearnPage } from "../../page-objects/connect-backend/LearnPage.js";
-import { TutorialWidget } from "../../Widgets/TutorialWidget.js";
-import { LoginPage } from "../../page-objects/LoginPage.js";
-import { HeaderOfAnyPage } from "../../page-objects/connect-backend/HeaderOfAnyPage.js";
 
 const baseUrl = "https://learn.unity.com";
 const prefix = process.env.PREFIX;
