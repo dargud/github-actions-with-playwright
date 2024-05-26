@@ -8,7 +8,7 @@ defaults:
 jobs:
   test:
     timeout-minutes: 60
-    runs-on: [unity-linux-runner]
+    runs-on: ubuntu-latest
     env:
       PREFIX: "stg"
     steps:
