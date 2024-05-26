@@ -39,4 +39,5 @@ jobs:
         path: e2e/pd/tests/e2e/connect-backend-snapshot-tests.spec.js-snapshots/*.png
         retention-days: 3
     - name: RE-Run Playwright Snapshot Tests for connect-backend-stg
+      if: always()
       run: npm run tests:snapshot-tests
