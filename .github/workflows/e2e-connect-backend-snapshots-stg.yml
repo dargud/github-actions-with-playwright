@@ -32,7 +32,7 @@ jobs:
       if: failure()
       run: npm run tests:snapshot-tests --update-snapshots
     - name: Upload updated Playwright screenshots
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: failure()
       with:
         name: playwright-screenshots-updated
