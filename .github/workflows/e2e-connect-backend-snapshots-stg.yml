@@ -1,5 +1,6 @@
 name: E2E-snapshot-test-connect-backend-stg
 on:
+  workflow_dispatch
   push:
     branches: [ main ]
 defaults:
