@@ -1,8 +1,6 @@
-name: E2E-snapshot-test-connect-backend-stg
+name: E2E-manual
 on:
   workflow_dispatch
-  push:
-    branches: [ main ]
 defaults:
     run:
         working-directory: e2e/pd
