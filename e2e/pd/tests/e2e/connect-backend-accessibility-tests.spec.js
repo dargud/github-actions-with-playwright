@@ -268,7 +268,7 @@ test.describe("Connected BE (not logined user): Accessibility tests", () => {
   });
 });
 
-test.describe.only("Connected BE (logined user): Accessibility tests", () => {
+test.describe("Connected BE (logined user): Accessibility tests", () => {
   test.beforeEach(async ({ page }) => {
     test.slow(); // Delete after page performance improvements
     const app = new PageManager(page);
