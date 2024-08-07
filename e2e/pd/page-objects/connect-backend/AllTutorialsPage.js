@@ -12,7 +12,7 @@ export class AllTutorialsPage {
 
   async isPageDisplayed() {
     await this.page.waitForURL(`${BASE_URL}/tutorials`);
-    await this.page.waitForLoadState("domcontentloaded");
+    // await this.page.waitForLoadState("domcontentloaded");
     await expect(this.tutorialCard).toBeVisible();
   }
 
@@ -23,7 +23,7 @@ export class AllTutorialsPage {
 
   async isTutorialDisplayed() {
     await this.page.waitForURL(`${BASE_URL}/tutorial/**`);
-    await this.page.waitForLoadState("domcontentloaded");
+    // await this.page.waitForLoadState("domcontentloaded");
     await expect(this.tutorialContent).toBeVisible();
   }
 }

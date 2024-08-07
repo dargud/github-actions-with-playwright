@@ -14,7 +14,7 @@ export class AllPathwaysPage {
 
   async isPageDisplayed() {
     await this.page.waitForURL(`${BASE_URL}/pathways`);
-    await this.page.waitForLoadState("domcontentloaded");
+    // await this.page.waitForLoadState("domcontentloaded");
     await expect(this.pathWayCard).toBeVisible();
   }
 
@@ -25,7 +25,7 @@ export class AllPathwaysPage {
 
   async isPathwayDisplayed() {
     await this.page.waitForURL(`${BASE_URL}/pathway/**`);
-    await this.page.waitForLoadState("domcontentloaded");
+    // await this.page.waitForLoadState("domcontentloaded");
     await expect(this.pathWayContent).toBeVisible();
   }
 }

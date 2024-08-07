@@ -12,7 +12,7 @@ export class AllProjectsPage {
 
   async isPageDisplayed() {
     await this.page.waitForURL(`${BASE_URL}/projects`);
-    await this.page.waitForLoadState("domcontentloaded");
+    // await this.page.waitForLoadState("domcontentloaded");
     await expect(this.projectCard).toBeVisible();
   }
 
@@ -23,7 +23,7 @@ export class AllProjectsPage {
 
   async isProjectDisplayed() {
     await this.page.waitForURL(`${BASE_URL}/project/**`);
-    await this.page.waitForLoadState("domcontentloaded");
+    // await this.page.waitForLoadState("domcontentloaded");
     await expect(this.projectContent).toBeVisible();
   }
 }
