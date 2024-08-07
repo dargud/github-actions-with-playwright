@@ -1,7 +1,6 @@
 name: E2E-project-submission-connect-backend-prod
 on:
-  push:
-    branches: [ main ]
+  workflow_dispatch
 defaults:
     run:
         working-directory: e2e/pd
@@ -10,6 +9,7 @@ jobs:
     timeout-minutes: 60
     runs-on: [unity-linux-runner]
     env:
+      CI: true
       BASE_URL: ${{secrets.BASE_URL_PROD}}
       TEST_USER_EMAIL: ${{secrets.ADMIN_EMAIL}}
       TEST_USER_PASS: ${{secrets.ADMIN_PASS}}

@@ -1,4 +1,4 @@
-name: E2E-manual
+name: E2E-snapshot-test-connect-backend-stg
 on:
   workflow_dispatch
 defaults:
@@ -7,9 +7,15 @@ defaults:
 jobs:
   test:
     timeout-minutes: 60
-    runs-on: ubuntu-latest
+    runs-on: [unity-linux-runner]
     env:
+      CI: true
+      BASE_URL: ${{secrets.BASE_URL_STG}}
       PREFIX: "stg"
+      TEST_USER_EMAIL: ${{secrets.TEST_USER_EMAIL}}
+      TEST_USER_PASS: ${{secrets.TEST_USER_PASS}}
+      GMAIL_TESTER_CREDENTIALS: ${{secrets.GMAIL_TESTER_CREDENTIALS}}
+      GMAIL_TESTER_TOKEN: ${{secrets.GMAIL_TESTER_TOKEN}}
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4
@@ -29,7 +35,7 @@ jobs:
         retention-days: 3
     - name: Update screenshots in visual tests
       if: failure()
-      run: npm run tests:snapshot-tests --update-snapshots
+      run: npm run tests:snapshot-tests-update
     - name: Upload updated Playwright screenshots
       uses: actions/upload-artifact@v4
       if: failure()
@@ -37,6 +43,3 @@ jobs:
         name: playwright-screenshots-updated
         path: e2e/pd/tests/e2e/connect-backend-snapshot-tests.spec.js-snapshots/*.png
         retention-days: 3
-    - name: RE-Run Playwright Snapshot Tests for connect-backend-stg
-      if: always()
-      run: npm run tests:snapshot-tests
