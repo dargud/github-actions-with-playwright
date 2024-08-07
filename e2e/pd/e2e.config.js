@@ -1,7 +1,7 @@
 const config = {
     timeout: 60000,
     retries: 1,
-    testDir: 'e2e-pd/tests/e2e',
+    testDir: 'tests/e2e',
     use: {
         trace: 'on-first-retry',
         headless: true,
