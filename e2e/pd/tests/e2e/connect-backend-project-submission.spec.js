@@ -16,7 +16,7 @@ test.describe("Connected BE: Smoke, project submission", () => {
 
     // Prepare the page for the login:
     await page.goto(`${BASE_URL}`);
-    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("domcontentloaded");
     await expect(page).toHaveURL(`${BASE_URL}`);
 
     // Work with the login iFrame:
@@ -27,7 +27,7 @@ test.describe("Connected BE: Smoke, project submission", () => {
     await app.loginView.login(user);
     await app.homePage.isLoggedin();
 
-    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("domcontentloaded");
     if (await app.tutorial.welcomeScreen.isVisible()) {
       await app.tutorial.clickDismissButton();
     }

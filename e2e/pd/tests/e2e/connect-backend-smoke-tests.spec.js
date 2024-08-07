@@ -16,7 +16,7 @@ test.describe("Connected BE: Smoke without logged in user, common tests", () => 
 
     // Prepare the page for tests:
     await page.goto(`${BASE_URL}`);
-    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("domcontentloaded");
     await expect(page).toHaveURL(`${BASE_URL}`);
 
     // Close the Tutorial
@@ -110,7 +110,7 @@ test.describe("Connected BE: Smoke without logged in user, */learn only", () => 
 
     // Prepare the page for tests:
     await page.goto(`${BASE_URL}`);
-    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("domcontentloaded");
     await expect(page).toHaveURL(`${BASE_URL}`);
   });
 
@@ -147,7 +147,7 @@ test.describe("Connected BE: Smoke with logged in user", () => {
 
     // Prepare the page for the login:
     await page.goto(`${BASE_URL}`);
-    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("domcontentloaded");
     await expect(page).toHaveURL(`${BASE_URL}`);
 
     // Work with the login iFrame:
@@ -158,7 +158,7 @@ test.describe("Connected BE: Smoke with logged in user", () => {
     await app.loginView.login(user);
     await app.homePage.isLoggedin();
 
-    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("domcontentloaded");
     if (await app.tutorial.welcomeScreen.isVisible()) {
       await app.tutorial.clickDismissButton();
     }

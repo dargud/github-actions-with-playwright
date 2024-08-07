@@ -17,7 +17,7 @@ test.describe("Connected BE (not logined user): Snapshot tests", () => {
   test("Connected BE: Home page", async ({ page }) => {
     const app = new PageManager(page);
     await page.goto(`${BASE_URL}`);
-    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("domcontentloaded");
     await app.cookies.hide();
     await expect(await page.screenshot()).toMatchSnapshot(
       `${ENV}-home-page.png`,
@@ -30,7 +30,7 @@ test.describe("Connected BE (not logined user): Snapshot tests", () => {
   test("Connected BE: Pathways page", async ({ page }) => {
     const app = new PageManager(page);
     await page.goto(`${BASE_URL}/pathways`);
-    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("domcontentloaded");
     await app.cookies.hide();
     await expect(await page.screenshot()).toMatchSnapshot(
       `${ENV}-pathways-page.png`,
@@ -43,7 +43,7 @@ test.describe("Connected BE (not logined user): Snapshot tests", () => {
   test("Connected BE: Creative Core pathway", async ({ page }) => {
     const app = new PageManager(page);
     await page.goto(`${BASE_URL}/pathway/creative-core`);
-    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("domcontentloaded");
     await app.cookies.hide();
     await expect(await page.screenshot()).toMatchSnapshot(
       `${ENV}-creative-core-pathway-page.png`,
@@ -58,7 +58,7 @@ test.describe("Connected BE (not logined user): Snapshot tests", () => {
   }) => {
     const app = new PageManager(page);
     await page.goto(`${BASE_URL}/live-calendar/?tab=opening`);
-    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("domcontentloaded");
     await app.cookies.hide();
     await expect(await page.screenshot()).toMatchSnapshot(
       `${ENV}-events-open-for-registration-page.png`,
@@ -73,7 +73,7 @@ test.describe("Connected BE (not logined user): Snapshot tests", () => {
   }) => {
     const app = new PageManager(page);
     await page.goto(`${BASE_URL}/live-calendar/?tab=previous`);
-    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("domcontentloaded");
     await app.cookies.hide();
     await expect(await page.screenshot()).toMatchSnapshot(
       `${ENV}-events-previously-recorded-page.png`,
@@ -86,7 +86,7 @@ test.describe("Connected BE (not logined user): Snapshot tests", () => {
   test("Connected BE: All Courses page", async ({ page }) => {
     const app = new PageManager(page);
     await page.goto(`${BASE_URL}/courses`);
-    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("domcontentloaded");
     await app.cookies.hide();
     await expect(await page.screenshot()).toMatchSnapshot(
       `${ENV}-courses-page.png`,
@@ -108,7 +108,7 @@ test.describe("Connected BE (not logined user): Snapshot tests", () => {
       await page.goto(`${BASE_URL}/course/create-with-ar-face-filters`);
     }
 
-    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("domcontentloaded");
     await app.cookies.hide();
     await sideBar.waitFor();
     await expect(await page.screenshot()).toMatchSnapshot(
@@ -122,7 +122,7 @@ test.describe("Connected BE (not logined user): Snapshot tests", () => {
   test("Connected BE: All Projects page", async ({ page }) => {
     const app = new PageManager(page);
     await page.goto(`${BASE_URL}/projects`);
-    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("domcontentloaded");
     await app.cookies.hide();
     await expect(await page.screenshot()).toMatchSnapshot(
       `${ENV}-projects-page.png`,
@@ -146,7 +146,7 @@ test.describe("Connected BE (not logined user): Snapshot tests", () => {
       );
     }
 
-    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("domcontentloaded");
     await app.cookies.hide();
     await sideBar.waitFor();
     await expect(await page.screenshot()).toMatchSnapshot(
@@ -160,7 +160,7 @@ test.describe("Connected BE (not logined user): Snapshot tests", () => {
   test("Connected BE: All Tutorials page", async ({ page }) => {
     const app = new PageManager(page);
     await page.goto(`${BASE_URL}/tutorials`);
-    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("domcontentloaded");
     await app.cookies.hide();
     await expect(await page.screenshot()).toMatchSnapshot(
       `${ENV}-tutorials-page.png`,
@@ -182,7 +182,7 @@ test.describe("Connected BE (not logined user): Snapshot tests", () => {
       await page.goto(`${BASE_URL}/tutorial/6629dd6bedbc2a0e64f34aa7`);
     }
 
-    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("domcontentloaded");
     await app.cookies.hide();
     await sideBar.waitFor();
     await expect(await page.screenshot()).toMatchSnapshot(
@@ -196,7 +196,7 @@ test.describe("Connected BE (not logined user): Snapshot tests", () => {
   test("Connected BE: Educator Hub", async ({ page }) => {
     const app = new PageManager(page);
     await page.goto(`${BASE_URL}/educators`);
-    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("domcontentloaded");
     await app.cookies.hide();
     await expect(await page.screenshot()).toMatchSnapshot(
       `${ENV}-educator-hub-page.png`,
@@ -209,7 +209,7 @@ test.describe("Connected BE (not logined user): Snapshot tests", () => {
   test("Connected BE: FAQ", async ({ page }) => {
     const app = new PageManager(page);
     await page.goto(`${BASE_URL}/faq`);
-    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("domcontentloaded");
     await app.cookies.hide();
     await expect(await page.screenshot()).toMatchSnapshot(
       `${ENV}-faq-page.png`,
@@ -231,7 +231,7 @@ test.describe("Connected BE (logined user): Snapshot tests", () => {
 
     // Prepare the page for the login:
     await page.goto(`${BASE_URL}`);
-    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("domcontentloaded");
 
     // Work with the login iFrame:
     if (await app.tutorial.welcomeScreen.isVisible()) {
@@ -241,7 +241,7 @@ test.describe("Connected BE (logined user): Snapshot tests", () => {
     await app.loginView.login(user);
     await app.homePage.isLoggedin();
 
-    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("domcontentloaded");
     if (await app.tutorial.welcomeScreen.isVisible()) {
       await app.tutorial.clickDismissButton();
     }
@@ -265,7 +265,7 @@ test.describe("Connected BE (logined user): Snapshot tests", () => {
       await app.tutorial.clickDismissButton();
     }
     await app.header.clickMyLearning();
-    await page.waitForLoadState("networkidle");
+    await page.waitForLoadState("domcontentloaded");
     await app.myLearningPage.isPageDisplayed();
     await app.cookies.hide();
     await expect(await page.screenshot()).toMatchSnapshot(
