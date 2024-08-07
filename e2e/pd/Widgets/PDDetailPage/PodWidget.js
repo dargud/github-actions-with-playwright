@@ -1,6 +1,6 @@
 import { expect } from '@playwright/test'
 
-exports.PodWidget = class PodWidget {
+export class PodWidget {
     constructor(page) {
         this.page = page;
         this.podName = this.page.locator('[data-testid="pod-name"]');

@@ -1,4 +1,4 @@
-exports.ExerciseWidget = class ExerciseWidget {
+export class ExerciseWidget {
     constructor(page) {
         this.page = page;
         this.markStepAsCompleteBtn = this.page.getByRole('button', { name: 'Mark step as complete' });

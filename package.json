@@ -8,8 +8,8 @@
     "tests:e2e:chrome": "playwright test --config=e2e.config.js --project=Chromium --reporter=html",
     "tests:smoke:all": "playwright test --config=smoke.config.js --grep @Smoke --reporter=html",
     "tests:smoke:chrome": "playwright test --config=smoke.config.js --grep @Smoke --project=Chromium --headed",
-    "tests:new": "playwright test newApp.spec.js --config=e2e.config.js --project=Chromium --reporter=html",
-    "tests:old": "playwright test oldApp.spec.js --config=e2e.config.js --project=Chromium --reporter=html"
+    "tests:learn-platform": "playwright test newApp.spec.js --config=e2e.config.js --project=Chromium --reporter=html",
+    "tests:connect-backend": "playwright test oldApp.spec.js --config=e2e.config.js --project=Chromium --reporter=html"
   },
   "author": "",
   "license": "ISC",

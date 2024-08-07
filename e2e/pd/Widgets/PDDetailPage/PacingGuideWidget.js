@@ -1,6 +1,6 @@
 import { expect } from "@playwright/test";
 
-exports.PacingGuideWidget = class PacingGuideWidget {
+export class PacingGuideWidget {
     constructor(page) {
         this.page = page;
         this.pacingGuide = this.page.locator('[class="md:max-w-lg"]');

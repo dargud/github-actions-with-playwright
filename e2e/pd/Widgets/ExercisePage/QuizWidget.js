@@ -1,4 +1,4 @@
-exports.QuizWidget = class QuizWidget {
+export class QuizWidget {
     constructor(page) {
         this.page = page;
     };

@@ -1,6 +1,6 @@
 import { expect } from "@playwright/test";
 
-exports.CourseWidget = class CourseWidget {
+export class CourseWidget {
     constructor(page) {
         this.page = page;
         this.courseTitle = this.page.locator('[class="flex flex-col"]');
