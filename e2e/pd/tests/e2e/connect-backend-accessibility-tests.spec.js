@@ -14,7 +14,7 @@ const tags = ["wcag22a", "wcag22aa"];
 test.describe("Connected BE (not logined user): Accessibility tests", () => {
   test("Connected BE: Home page", async ({ page }, testInfo) => {
     await page.goto(`${BASE_URL}`);
-    await page.waitForLoadState("domcontentloaded");
+    await page.waitForLoadState("networkidle");
     const accessibilityScanResults = await new AxeBuilder({ page })
       .withTags(tags)
       .analyze();
@@ -31,7 +31,7 @@ test.describe("Connected BE (not logined user): Accessibility tests", () => {
     page,
   }, testInfo) => {
     await page.goto(`${BASE_URL}/live-calendar/?tab=opening`);
-    await page.waitForLoadState("domcontentloaded");
+    await page.waitForLoadState("networkidle");
     const accessibilityScanResults = await new AxeBuilder({ page })
       .withTags(tags)
       .analyze();
@@ -51,7 +51,7 @@ test.describe("Connected BE (not logined user): Accessibility tests", () => {
     page,
   }, testInfo) => {
     await page.goto(`${BASE_URL}/live-calendar/?tab=previous`);
-    await page.waitForLoadState("domcontentloaded");
+    await page.waitForLoadState("networkidle");
     const accessibilityScanResults = await new AxeBuilder({ page })
       .withTags(tags)
       .analyze();
@@ -69,7 +69,7 @@ test.describe("Connected BE (not logined user): Accessibility tests", () => {
 
   test("Connected BE: All Pathways page", async ({ page }, testInfo) => {
     await page.goto(`${BASE_URL}/pathways`);
-    await page.waitForLoadState("domcontentloaded");
+    await page.waitForLoadState("networkidle");
     const accessibilityScanResults = await new AxeBuilder({ page })
       .withTags(tags)
       .analyze();
@@ -106,7 +106,7 @@ test.describe("Connected BE (not logined user): Accessibility tests", () => {
 
   test("Connected BE: All Courses page", async ({ page }, testInfo) => {
     await page.goto(`${BASE_URL}/courses`);
-    await page.waitForLoadState("domcontentloaded");
+    await page.waitForLoadState("networkidle");
     const accessibilityScanResults = await new AxeBuilder({ page })
       .withTags(tags)
       .analyze();
@@ -143,7 +143,7 @@ test.describe("Connected BE (not logined user): Accessibility tests", () => {
 
   test("Connected BE: All Projects page", async ({ page }, testInfo) => {
     await page.goto(`${BASE_URL}/projects`);
-    await page.waitForLoadState("domcontentloaded");
+    await page.waitForLoadState("networkidle");
     const accessibilityScanResults = await new AxeBuilder({ page })
       .withTags(tags)
       .analyze();
@@ -180,7 +180,7 @@ test.describe("Connected BE (not logined user): Accessibility tests", () => {
 
   test("Connected BE: All Tutorials page", async ({ page }, testInfo) => {
     await page.goto(`${BASE_URL}/tutorials`);
-    await page.waitForLoadState("domcontentloaded");
+    await page.waitForLoadState("networkidle");
     const accessibilityScanResults = await new AxeBuilder({ page })
       .withTags(tags)
       .analyze();
@@ -217,7 +217,7 @@ test.describe("Connected BE (not logined user): Accessibility tests", () => {
 
   test("Connected BE: Educator Hub", async ({ page }, testInfo) => {
     await page.goto(`${BASE_URL}/educators`);
-    await page.waitForLoadState("domcontentloaded");
+    await page.waitForLoadState("networkidle");
     const accessibilityScanResults = await new AxeBuilder({ page })
       .withTags(tags)
       .analyze();
@@ -236,7 +236,7 @@ test.describe("Connected BE (not logined user): Accessibility tests", () => {
     await page.goto(
       `${BASE_URL}/search?k=%5B%22tag%3A5d5d0e927fbf7d009e2715c0%22%5D`
     );
-    await page.waitForLoadState("domcontentloaded");
+    await page.waitForLoadState("networkidle");
     const accessibilityScanResults = await new AxeBuilder({ page })
       .withTags(tags)
       .analyze();
@@ -254,7 +254,7 @@ test.describe("Connected BE (not logined user): Accessibility tests", () => {
 
   test("Connected BE: FAQ", async ({ page }, testInfo) => {
     await page.goto(`${BASE_URL}/faq`);
-    await page.waitForLoadState("domcontentloaded");
+    await page.waitForLoadState("networkidle");
     const accessibilityScanResults = await new AxeBuilder({ page })
       .withTags(tags)
       .analyze();
@@ -275,7 +275,7 @@ test.describe("Connected BE (logined user): Accessibility tests", () => {
 
     // Prepare the page for the login:
     await page.goto(`${BASE_URL}`);
-    await page.waitForLoadState("domcontentloaded");
+    await page.waitForLoadState("networkidle");
     if (await app.tutorial.welcomeScreen.isVisible()) {
       await app.tutorial.clickDismissButton();
     }
@@ -284,7 +284,7 @@ test.describe("Connected BE (logined user): Accessibility tests", () => {
     await app.loginView.login(user);
     await app.homePage.isLoggedin();
 
-    await page.waitForLoadState("domcontentloaded");
+    await page.waitForLoadState("networkidle");
     if (await app.tutorial.welcomeScreen.isVisible()) {
       await app.tutorial.clickDismissButton();
     }
@@ -292,7 +292,7 @@ test.describe("Connected BE (logined user): Accessibility tests", () => {
 
   test("Connected BE: Home page", async ({ page }, testInfo) => {
     await page.goto(`${BASE_URL}`);
-    await page.waitForLoadState("domcontentloaded");
+    await page.waitForLoadState("networkidle");
     const accessibilityScanResults = await new AxeBuilder({ page })
       .withTags(tags)
       .analyze();
@@ -326,7 +326,7 @@ test.describe("Connected BE (logined user): Accessibility tests", () => {
     await app.header.clickMyLearning();
     await app.myLearningPage.isPageDisplayed();
     await app.myLearningPage.openTab("My Profile");
-    await page.waitForLoadState("domcontentloaded");
+    await page.waitForLoadState("networkidle");
     const accessibilityScanResults = await new AxeBuilder({ page })
       .withTags(tags)
       .analyze();
@@ -344,7 +344,7 @@ test.describe("Connected BE (logined user): Accessibility tests", () => {
     await app.header.clickMyLearning();
     await app.myLearningPage.isPageDisplayed();
     await app.myLearningPage.openTab("Settings");
-    await page.waitForLoadState("domcontentloaded");
+    await page.waitForLoadState("networkidle");
     const accessibilityScanResults = await new AxeBuilder({ page })
       .withTags(tags)
       .analyze();
