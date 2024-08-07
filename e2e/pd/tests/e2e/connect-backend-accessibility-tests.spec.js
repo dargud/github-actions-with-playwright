@@ -12,7 +12,7 @@ const user = {
 const tags = ["wcag22a", "wcag22aa"];
 
 test.describe("Connected BE (not logined user): Accessibility tests", () => {
-  test("Connected BE: Home page", async ({ page }, testInfo) => {
+  test.only("Connected BE: Home page", async ({ page }, testInfo) => {
     await page.goto(`${BASE_URL}`);
     // await page.waitForLoadState("domcontentloaded");
     const accessibilityScanResults = await new AxeBuilder({ page })
