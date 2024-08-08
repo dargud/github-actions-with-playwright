@@ -1,0 +1,102 @@
+name: E2E test suit | Staging
+
+on:
+  push:
+    branches: [ main ]
+  schedule:
+    - cron: '0 */12 * * *'
+  workflow_dispatch:
+
+defaults:
+  run:
+    working-directory: e2e/pd
+
+env:
+  CI: true
+  BASE_URL: ${{secrets.BASE_URL_STG}}
+  ENV: "stg"
+  TEST_USER_EMAIL: ${{secrets.TEST_USER_EMAIL}}
+  TEST_USER_PASS: ${{secrets.TEST_USER_PASS}}
+  GMAIL_TESTER_CREDENTIALS: ${{secrets.GMAIL_TESTER_CREDENTIALS}}
+  GMAIL_TESTER_TOKEN: ${{secrets.GMAIL_TESTER_TOKEN}}
+
+jobs:
+  e2e-connect-backend-smoke-stg:
+    name: E2E-smoke-test-connect-backend-stg
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 20
+    - name: Install dependencies
+      run: npm ci
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
+    - name: Run Playwright smoke tests for connect-backend-stg
+      run: npm run tests:connect-backend
+    - uses: actions/upload-artifact@v4
+      if: ${{ !cancelled() }}
+      with:
+        name: playwright-report
+        path: e2e/pd/playwright-report/
+        retention-days: 3
+    
+  e2e-connect-backend-snapshots-stg:
+    needs: e2e-connect-backend-smoke-stg
+    if: always()
+    name: E2E-snapshot-test-connect-backend-stg
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 20
+    - name: Install dependencies
+      run: npm ci
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
+    - name: Run Playwright Snapshot Tests for connect-backend-stg
+      run: npm run tests:snapshot-tests
+    - uses: actions/upload-artifact@v4
+      if: ${{ !cancelled() }}
+      with:
+        name: playwright-report
+        path: e2e/pd/playwright-report/
+        retention-days: 3
+    - name: Update screenshots in visual tests
+      if: failure()
+      run: npm run tests:snapshot-tests-update
+    - name: Upload updated Playwright screenshots
+      uses: actions/upload-artifact@v4
+      if: failure()
+      with:
+        name: playwright-screenshots-updated
+        path: e2e/pd/tests/e2e/connect-backend-snapshot-tests.spec.js-snapshots/*.png
+        retention-days: 3
+  
+  e2e-connect-backend-accessibility-stg:
+    needs: e2e-connect-backend-snapshots-stg
+    if: always()
+    name: E2E-accessibility-test-connect-backend-stg
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 20
+    - name: Install dependencies
+      run: npm ci
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
+    - name: Run Playwright accessibility test for connect-backend-stg
+      run: npm run tests:accessibility-tests
+    - uses: actions/upload-artifact@v4
+      if: ${{ !cancelled() }}
+      with:
+        name: playwright-report
+        path: e2e/pd/playwright-report/
+        retention-days: 3

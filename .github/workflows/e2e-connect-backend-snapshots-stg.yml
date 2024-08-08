@@ -1,6 +1,6 @@
 name: E2E-snapshot-test-connect-backend-stg
 on:
-  workflow_dispatch
+  workflow_dispatch:
 defaults:
     run:
         working-directory: e2e/pd
