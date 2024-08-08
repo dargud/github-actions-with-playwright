@@ -1,10 +1,6 @@
 name: E2E test suit | Production
 
 on:
-  push:
-    branches: [ main ]
-  schedule:
-    - cron: '0 */6 * * *'
   workflow_dispatch:
 
 defaults:
