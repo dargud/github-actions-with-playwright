@@ -18,7 +18,7 @@ env:
 
 jobs:
   e2e-connect-backend-smoke-prod:
-    name: E2E-smoke-test-connect-backend-prod
+    name: E2E-Smoke-test-prod
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
@@ -42,7 +42,7 @@ jobs:
   e2e-connect-backend-snapshots-prod:
     needs: e2e-connect-backend-smoke-prod
     if: always()
-    name: e2e-connect-backend-snapshots-prod
+    name: E2E-Snapshots-test-prod
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
@@ -76,7 +76,7 @@ jobs:
   e2e-connect-backend-accessibility-prod:
     needs: e2e-connect-backend-snapshots-prod
     if: always()
-    name: e2e-connect-backend-accessibility-prod
+    name: E2E-Accessibility-test-prod
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:

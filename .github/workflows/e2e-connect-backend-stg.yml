@@ -18,7 +18,7 @@ env:
 
 jobs:
   e2e-connect-backend-smoke-stg:
-    name: E2E-smoke-test-connect-backend-stg
+    name: E2E-Smoke-test-stg
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
@@ -42,7 +42,7 @@ jobs:
   e2e-connect-backend-snapshots-stg:
     needs: e2e-connect-backend-smoke-stg
     if: always()
-    name: E2E-snapshot-test-connect-backend-stg
+    name: E2E-Snapshot-test-stg
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
@@ -76,7 +76,7 @@ jobs:
   e2e-connect-backend-accessibility-stg:
     needs: e2e-connect-backend-snapshots-stg
     if: always()
-    name: E2E-accessibility-test-connect-backend-stg
+    name: E2E-Accessibility-test-stg
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
