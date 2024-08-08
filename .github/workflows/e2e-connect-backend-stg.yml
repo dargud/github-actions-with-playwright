@@ -10,7 +10,7 @@ defaults:
 env:
   CI: true
   BASE_URL: ${{secrets.BASE_URL_STG}}
-  ENV: "stg"
+  ENV: stg
   TEST_USER_EMAIL: ${{secrets.TEST_USER_EMAIL}}
   TEST_USER_PASS: ${{secrets.TEST_USER_PASS}}
   GMAIL_TESTER_CREDENTIALS: ${{secrets.GMAIL_TESTER_CREDENTIALS}}
