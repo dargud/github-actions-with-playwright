@@ -1,7 +1,7 @@
-name: E2E test suit | Production
-
 on:
   workflow_dispatch:
+
+name: E2E test suit | Production
 
 defaults:
   run:
