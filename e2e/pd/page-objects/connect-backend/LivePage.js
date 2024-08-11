@@ -10,7 +10,7 @@ export class LivePage {
 
   async isPageDisplayed() {
     await this.page.waitForURL(`${BASE_URL}/live-calendar`);
-    await this.page.waitForLoadState("networkidle");
+    await this.page.waitForLoadState("load");
     await expect(this.page.locator("h1")).toContainText("Learn from experts");
   }
 }

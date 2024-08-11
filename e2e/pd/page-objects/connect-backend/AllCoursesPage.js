@@ -12,7 +12,7 @@ export class AllCoursesPage {
 
   async isPageDisplayed() {
     await this.page.waitForURL(`${BASE_URL}/courses`);
-    await this.page.waitForLoadState("networkidle");
+    await this.page.waitForLoadState("load");
     await expect(this.courseCard).toBeVisible({ timeout: 60000 });
   }
 
@@ -23,7 +23,7 @@ export class AllCoursesPage {
 
   async isCourseDisplayed() {
     await this.page.waitForURL(`${BASE_URL}/course/**`);
-    await this.page.waitForLoadState("networkidle");
+    await this.page.waitForLoadState("load");
     await expect(this.courseContentItem).toBeVisible({ timeout: 60000 });
   }
 }
