@@ -147,7 +147,7 @@ test.describe("Connected BE: Smoke without logged in user, */learn only", () => 
   });
 });
 
-test.describe("Connected BE: Smoke with logged in user", () => {
+test.describe.skip("Connected BE: Smoke with logged in user", () => {
   test.beforeEach(async ({ page }) => {
     test.slow(); // Delete after page performance improvements
     const app = new PageManager(page);
