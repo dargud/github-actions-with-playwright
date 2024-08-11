@@ -11,7 +11,7 @@ const user = {
 };
 const tags = ["wcag22a", "wcag22aa"];
 
-test.describe.only("Connected BE (not logined user): Accessibility tests", () => {
+test.describe("Connected BE (not logined user): Accessibility tests", () => {
   test("Connected BE: Home page", async ({ page }, testInfo) => {
     test.slow(); // Delete after page performance improvements
     const app = new PageManager(page);
@@ -287,7 +287,7 @@ test.describe.only("Connected BE (not logined user): Accessibility tests", () =>
   });
 });
 
-test.describe.skip("Connected BE (logined user): Accessibility tests", () => {
+test.describe("Connected BE (logined user): Accessibility tests", () => {
   test.beforeEach(async ({ page }) => {
     test.slow(); // Delete after page performance improvements
     const app = new PageManager(page);

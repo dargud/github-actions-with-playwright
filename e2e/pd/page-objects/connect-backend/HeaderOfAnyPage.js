@@ -22,15 +22,16 @@ export class HeaderOfAnyPage {
   async clickMyLearning() {
     let myLearningBtn = this.page.getByRole("link", {
       name: "My Learning",
-      exact: true,
-    });
+    }).first();
 
     if (await myLearningBtn.isVisible()) {
+      await this.page.waitForTimeout(500);
       await myLearningBtn.click();
     } else {
       myLearningBtn = this.page.getByRole("button", {
         name: "My Learning",
       });
+      await this.page.waitForTimeout(500);
       await myLearningBtn.click();
     }
 
