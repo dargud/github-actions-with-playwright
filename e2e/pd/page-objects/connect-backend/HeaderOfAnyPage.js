@@ -56,7 +56,7 @@ export class HeaderOfAnyPage {
 
     await this.page.waitForTimeout(1000);
     await browseBtn.click();
-    await this.page.waitForLoadState("domcontentloaded");
+    await this.page.waitForLoadState("networkidle");
     await this.page.waitForTimeout(1000);
     await topicItem.click();
     await this.page.waitForTimeout(1000);
@@ -84,12 +84,12 @@ export class HeaderOfAnyPage {
       educatorHubBtn = this.page.getByRole("button", { name: "For Educators" });
       await educatorHubBtn.click();
 
-      await this.page.waitForLoadState("domcontentloaded");
+      await this.page.waitForLoadState("networkidle");
       await accessNowBtn.click();
       await this.page.waitForURL(`${BASE_URL}/educators`);
     }
 
-    await this.page.waitForLoadState("domcontentloaded");
+    await this.page.waitForLoadState("networkidle");
     await expect(educatorsHeader).toBeVisible({ timeout: 60000 });
   }
 
