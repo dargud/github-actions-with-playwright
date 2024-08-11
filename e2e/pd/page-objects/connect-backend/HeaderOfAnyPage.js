@@ -52,10 +52,12 @@ export class HeaderOfAnyPage {
 
   async clickBrowseAndSelectItem(item) {
     const browseBtn = this.page.getByRole("button", { name: "Browse" }).first();
+    const browseOption = this.page.getByRole('link', { name: 'Editor Essentials' });
     const topicItem = this.page.getByRole("link", { name: item }).first();
 
     await this.page.waitForTimeout(1000);
     await browseBtn.click();
+    await expect(browseOption).toBeVisible();
     await this.page.waitForLoadState("load");
     await this.page.waitForTimeout(1000);
     await topicItem.click();

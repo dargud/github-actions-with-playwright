@@ -17,7 +17,7 @@ export class AllTutorialsPage {
   }
 
   async openTutorial() {
-    await this.page.waitForTimeout(1000);
+    await this.page.waitForTimeout(500);
     await this.tutorialCard.click();
   }
 
