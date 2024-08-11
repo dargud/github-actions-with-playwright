@@ -67,7 +67,7 @@ test.describe("Connected BE (not logined user): Accessibility tests", () => {
     expect(accessibilityScanResults.violations).toEqual([]);
   });
 
-  test.only("Connected BE: All Pathways page", async ({ page }, testInfo) => {
+  test("Connected BE: All Pathways page", async ({ page }, testInfo) => {
     await page.goto(`${BASE_URL}/pathways`);
     await page.waitForLoadState("load");
     const accessibilityScanResults = await new AxeBuilder({ page })
@@ -82,7 +82,7 @@ test.describe("Connected BE (not logined user): Accessibility tests", () => {
     expect(accessibilityScanResults.violations).toEqual([]);
   });
 
-  test("Connected BE: Pathway page", async ({ page }, testInfo) => {
+  test.only("Connected BE: Pathway page", async ({ page }, testInfo) => {
     const app = new PageManager(page);
     await page.goto(`${BASE_URL}`);
     if (await app.tutorial.welcomeScreen.isVisible()) {
