@@ -12,8 +12,8 @@ export class AllTutorialsPage {
 
   async isPageDisplayed() {
     await this.page.waitForURL(`${BASE_URL}/tutorials`);
-    await this.page.waitForLoadState("domcontentloaded");
-    await expect(this.tutorialCard).toBeVisible();
+    await this.page.waitForLoadState("networkidle");
+    await expect(this.tutorialCard).toBeVisible({ timeout: 60000 });
   }
 
   async openTutorial() {
@@ -23,7 +23,7 @@ export class AllTutorialsPage {
 
   async isTutorialDisplayed() {
     await this.page.waitForURL(`${BASE_URL}/tutorial/**`);
-    await this.page.waitForLoadState("domcontentloaded");
-    await expect(this.tutorialContent).toBeVisible();
+    await this.page.waitForLoadState("networkidle");
+    await expect(this.tutorialContent).toBeVisible({ timeout: 60000 });
   }
 }

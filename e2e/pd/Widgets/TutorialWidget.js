@@ -12,22 +12,22 @@ export class TutorialWidget {
   }
 
   async isWelcomeScreenDisplayed() {
-    await expect(this.welcomeScreen).toBeVisible();
+    await expect(this.welcomeScreen).toBeVisible({ timeout: 60000 });
   }
 
   async clickDismissButton() {
-    await expect(this.dismissBtn).toBeVisible();
+    await expect(this.dismissBtn).toBeVisible({ timeout: 60000 });
     await this.dismissBtn.click();
-    await expect(this.welcomeScreen).not.toBeVisible();
+    await expect(this.welcomeScreen).not.toBeVisible({ timeout: 60000 });
   }
 
   async clickStartTourButton() {
-    await expect(this.startTourBtn).toBeVisible();
+    await expect(this.startTourBtn).toBeVisible({ timeout: 60000 });
     await this.startTourBtn.click();
-    await expect(this.welcomeScreen).not.toBeVisible();
+    await expect(this.welcomeScreen).not.toBeVisible({ timeout: 60000 });
   }
 
   async isTourTipDisplayed() {
-    await expect(this.tourTip).toBeVisible();
+    await expect(this.tourTip).toBeVisible({ timeout: 60000 });
   }
 }

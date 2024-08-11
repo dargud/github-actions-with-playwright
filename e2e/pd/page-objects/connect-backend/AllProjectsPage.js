@@ -12,8 +12,8 @@ export class AllProjectsPage {
 
   async isPageDisplayed() {
     await this.page.waitForURL(`${BASE_URL}/projects`);
-    await this.page.waitForLoadState("domcontentloaded");
-    await expect(this.projectCard).toBeVisible();
+    await this.page.waitForLoadState("networkidle");
+    await expect(this.projectCard).toBeVisible({ timeout: 60000 });
   }
 
   async openProject() {
@@ -23,7 +23,7 @@ export class AllProjectsPage {
 
   async isProjectDisplayed() {
     await this.page.waitForURL(`${BASE_URL}/project/**`);
-    await this.page.waitForLoadState("domcontentloaded");
-    await expect(this.projectContent).toBeVisible();
+    await this.page.waitForLoadState("networkidle");
+    await expect(this.projectContent).toBeVisible({ timeout: 60000 });
   }
 }

@@ -16,13 +16,15 @@ test.describe("Connected BE: Smoke without logged in user, common tests", () => 
 
     // Prepare the page for tests:
     await page.goto(`${BASE_URL}`);
-    await page.waitForLoadState("domcontentloaded");
+    await page.waitForLoadState("networkidle");
     await expect(page).toHaveURL(`${BASE_URL}`);
 
     // Close the Tutorial
     if (await app.tutorial.welcomeScreen.isVisible()) {
       await app.tutorial.clickDismissButton();
     }
+
+    await app.homePage.isPageDisplayed();
   });
 
   test.afterEach(async ({ page }) => {
@@ -42,7 +44,12 @@ test.describe("Connected BE: Smoke without logged in user, common tests", () => 
     await app.header.clickUserMenuButton();
     await page.waitForTimeout(1000);
     await app.header.selectItemFromUserMenu("Sign In");
-    await page.waitForTimeout(3000);
+    // await page.waitForTimeout(3000);
+    // await expect(
+    //   page
+    //     .frameLocator('[id="__next"] iframe')
+    //     .getByText("Sign into your Unity ID")
+    // ).toBeVisible();
     await app.loginView.isLoginViewDisplayed();
   });
 
@@ -110,7 +117,7 @@ test.describe("Connected BE: Smoke without logged in user, */learn only", () => 
 
     // Prepare the page for tests:
     await page.goto(`${BASE_URL}`);
-    await page.waitForLoadState("domcontentloaded");
+    await page.waitForLoadState("networkidle");
     await expect(page).toHaveURL(`${BASE_URL}`);
   });
 
@@ -147,7 +154,7 @@ test.describe("Connected BE: Smoke with logged in user", () => {
 
     // Prepare the page for the login:
     await page.goto(`${BASE_URL}`);
-    await page.waitForLoadState("domcontentloaded");
+    await page.waitForLoadState("networkidle");
     await expect(page).toHaveURL(`${BASE_URL}`);
 
     // Work with the login iFrame:
@@ -158,7 +165,7 @@ test.describe("Connected BE: Smoke with logged in user", () => {
     await app.loginView.login(user);
     await app.homePage.isLoggedin();
 
-    await page.waitForLoadState("domcontentloaded");
+    await page.waitForLoadState("networkidle");
     if (await app.tutorial.welcomeScreen.isVisible()) {
       await app.tutorial.clickDismissButton();
     }

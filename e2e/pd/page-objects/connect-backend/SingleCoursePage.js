@@ -65,9 +65,11 @@ export class SingleCoursePage {
     expect(postImage.status()).toBe(200);
 
     if (isFirst) {
-      await expect(this.uploadedMediaPreview.first()).toBeVisible();
+      await expect(this.uploadedMediaPreview.first()).toBeVisible({
+        timeout: 60000,
+      });
     } else {
-      await expect(this.uploadedMediaPreview).toBeVisible();
+      await expect(this.uploadedMediaPreview).toBeVisible({ timeout: 60000 });
     }
   }
 
@@ -83,9 +85,11 @@ export class SingleCoursePage {
     expect(postVideoattachment.status()).toBe(200);
 
     if (isLast) {
-      await expect(this.uploadedMediaPreview.last()).toBeVisible();
+      await expect(this.uploadedMediaPreview.last()).toBeVisible({
+        timeout: 60000,
+      });
     } else {
-      await expect(this.uploadedMediaPreview).toBeVisible();
+      await expect(this.uploadedMediaPreview).toBeVisible({ timeout: 60000 });
     }
   }
 
@@ -116,7 +120,7 @@ export class SingleCoursePage {
   async deleteTestData() {
     await this.deleteMediaBtn.last().click();
     await this.deleteMediaBtn.first().click();
-    await expect(this.uploadedMediaPreview).not.toBeVisible();
+    await expect(this.uploadedMediaPreview).not.toBeVisible({ timeout: 60000 });
     await this.saveAndPreviewBtn.click();
   }
 

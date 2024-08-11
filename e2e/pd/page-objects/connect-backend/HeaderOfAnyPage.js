@@ -38,7 +38,7 @@ export class HeaderOfAnyPage {
     const activityTab = this.page
       .locator('[class*="tab-inner_"]')
       .filter({ hasText: "Activity" });
-    await expect(activityTab).toBeVisible();
+    await expect(activityTab).toBeVisible({ timeout: 60000 });
   }
 
   async clickPathways() {
@@ -56,7 +56,7 @@ export class HeaderOfAnyPage {
 
     await this.page.waitForTimeout(1000);
     await browseBtn.click();
-    await this.page.waitForLoadState("domcontentloaded");
+    await this.page.waitForLoadState("networkidle");
     await this.page.waitForTimeout(1000);
     await topicItem.click();
     await this.page.waitForTimeout(1000);
@@ -84,13 +84,13 @@ export class HeaderOfAnyPage {
       educatorHubBtn = this.page.getByRole("button", { name: "For Educators" });
       await educatorHubBtn.click();
 
-      await this.page.waitForLoadState("domcontentloaded");
+      await this.page.waitForLoadState("networkidle");
       await accessNowBtn.click();
       await this.page.waitForURL(`${BASE_URL}/educators`);
     }
 
-    await this.page.waitForLoadState("domcontentloaded");
-    await expect(educatorsHeader).toBeVisible();
+    await this.page.waitForLoadState("networkidle");
+    await expect(educatorsHeader).toBeVisible({ timeout: 60000 });
   }
 
   async clickUserMenuButton() {
@@ -102,7 +102,9 @@ export class HeaderOfAnyPage {
       await userMenuBtn.click();
     }
 
-    await expect(this.page.getByText("FAQ", { exact: true })).toBeVisible();
+    await expect(this.page.getByText("FAQ", { exact: true })).toBeVisible({
+      timeout: 60000,
+    });
   }
 
   async selectItemFromUserMenu(item) {

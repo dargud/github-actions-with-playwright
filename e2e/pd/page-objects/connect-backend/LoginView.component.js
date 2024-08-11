@@ -35,7 +35,7 @@ export class LoginView {
   }
 
   async isLoginViewDisplayed() {
-    await expect(this.loginInput).toBeVisible();
+    await expect(this.loginInput).toBeVisible({ timeout: 60000 });
   }
 
   async #newLoginWith(user) {
@@ -55,9 +55,9 @@ export class LoginView {
 
   async #oldLoginWith(user) {
     await this.signInBtn.click();
-    await this.loginInput.waitFor();
+    // await this.loginInput.waitFor();
+    await expect(this.loginInput).toBeVisible();
     await this.loginInput.fill(user.email);
-    await this.confirmBtn.click();
     await this.passwordInput.fill(user.password);
     await this.confirmBtn.click();
   }

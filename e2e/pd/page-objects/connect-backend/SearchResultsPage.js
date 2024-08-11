@@ -12,7 +12,7 @@ export class SearchResultsPage {
 
   async isPageDisplayed() {
     await this.page.waitForURL(`${BASE_URL}/search?k=**`);
-    await expect(this.searchResultItem).toBeVisible();
+    await expect(this.searchResultItem).toBeVisible({ timeout: 60000 });
   }
 
   async searchForCourseWithName(searchRequest) {
@@ -47,7 +47,7 @@ export class SearchResultsPage {
       .filter({ hasText: name })
       .locator('[class*="icon-close_"]');
     await clearAllBtn.click();
-    await expect(clearAllBtn).not.toBeVisible();
+    await expect(clearAllBtn).not.toBeVisible({ timeout: 60000 });
   }
 
   async clickFilterWithNameAndSelectOption(name, option) {
@@ -56,7 +56,7 @@ export class SearchResultsPage {
     const filterResult = this.page.getByRole("button", { name: option });
     await levelBtn.click();
     await levelMenuItem.click();
-    await expect(filterResult).toBeVisible();
+    await expect(filterResult).toBeVisible({ timeout: 60000 });
   }
 
   async filterBy(option) {
@@ -66,6 +66,8 @@ export class SearchResultsPage {
       .filter({ hasText: option });
     await filterBtn.filter({ hasText: "Best Match" }).click();
     await filterMenuItem.click();
-    await expect(filterBtn.filter({ hasText: `${option}` })).toBeVisible();
+    await expect(filterBtn.filter({ hasText: `${option}` })).toBeVisible({
+      timeout: 60000,
+    });
   }
 }

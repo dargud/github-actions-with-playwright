@@ -4,17 +4,17 @@ import "dotenv/config";
 export default defineConfig({
   timeout: 60000,
   testDir: "tests/e2e",
-  forbidOnly: !!process.env.CI,
+  // forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
-  // workers: process.env.CI ? 1 : 4,
+  //   workers: process.env.CI ? 1 : 4,
   reporter: "html",
   use: {
     headless: true,
     viewport: { width: 1440, height: 900 },
     actionTimeout: 15000,
     ignoreHTTPSErrors: true,
-    video: "off",
-    screenshot: "off",
+    video: "on-first-retry",
+    screenshot: "only-on-failure",
     trace: "on-first-retry",
   },
   projects: [

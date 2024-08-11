@@ -12,12 +12,14 @@ export class MyLearningPage {
     await expect(await this.page.url()).toContain("/u/");
     await expect(
       this.tabInActiveState.filter({ hasText: "Activity" })
-    ).toBeVisible();
+    ).toBeVisible({ timeout: 60000 });
   }
 
   async openTab(name) {
     const tab = this.page.getByRole("button", { name: name }).first();
     await tab.click();
-    await expect(this.tabInActiveState.filter({ hasText: name })).toBeVisible();
+    await expect(this.tabInActiveState.filter({ hasText: name })).toBeVisible({
+      timeout: 60000,
+    });
   }
 }

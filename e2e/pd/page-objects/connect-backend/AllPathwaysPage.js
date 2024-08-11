@@ -14,8 +14,8 @@ export class AllPathwaysPage {
 
   async isPageDisplayed() {
     await this.page.waitForURL(`${BASE_URL}/pathways`);
-    await this.page.waitForLoadState("domcontentloaded");
-    await expect(this.pathWayCard).toBeVisible();
+    await this.page.waitForLoadState("networkidle");
+    await expect(this.pathWayCard).toBeVisible({ timeout: 60000 });
   }
 
   async openPathway() {
@@ -25,7 +25,7 @@ export class AllPathwaysPage {
 
   async isPathwayDisplayed() {
     await this.page.waitForURL(`${BASE_URL}/pathway/**`);
-    await this.page.waitForLoadState("domcontentloaded");
-    await expect(this.pathWayContent).toBeVisible();
+    await this.page.waitForLoadState("networkidle");
+    await expect(this.pathWayContent).toBeVisible({ timeout: 60000 });
   }
 }

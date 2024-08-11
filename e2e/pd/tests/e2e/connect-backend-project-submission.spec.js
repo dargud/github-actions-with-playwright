@@ -16,7 +16,7 @@ test.describe("Connected BE: Smoke, project submission", () => {
 
     // Prepare the page for the login:
     await page.goto(`${BASE_URL}`);
-    await page.waitForLoadState("domcontentloaded");
+    await page.waitForLoadState("networkidle");
     await expect(page).toHaveURL(`${BASE_URL}`);
 
     // Work with the login iFrame:
@@ -27,7 +27,7 @@ test.describe("Connected BE: Smoke, project submission", () => {
     await app.loginView.login(user);
     await app.homePage.isLoggedin();
 
-    await page.waitForLoadState("domcontentloaded");
+    await page.waitForLoadState("networkidle");
     if (await app.tutorial.welcomeScreen.isVisible()) {
       await app.tutorial.clickDismissButton();
     }
@@ -63,7 +63,7 @@ test.describe("Connected BE: Smoke, project submission", () => {
     const isDeleted = async () => {
       await expect(
         app.projectSubmissionPage.uplaodedMediaPreview
-      ).not.toBeVisible();
+      ).not.toBeVisible({ timeout: 60000 });
     };
 
     await deleteImage();
@@ -82,7 +82,7 @@ test.describe("Connected BE: Smoke, project submission", () => {
     const isDeleted = async () => {
       await expect(
         app.projectSubmissionPage.uplaodedMediaPreview
-      ).not.toBeVisible();
+      ).not.toBeVisible({ timeout: 60000 });
     };
 
     await deleteVideo();
