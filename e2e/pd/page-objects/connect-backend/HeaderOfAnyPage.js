@@ -25,13 +25,13 @@ export class HeaderOfAnyPage {
     }).first();
 
     if (await myLearningBtn.isVisible()) {
-      await this.page.waitForTimeout(500);
+      await this.page.waitForTimeout(1000);
       await myLearningBtn.click();
     } else {
       myLearningBtn = this.page.getByRole("button", {
         name: "My Learning",
       });
-      await this.page.waitForTimeout(500);
+      await this.page.waitForTimeout(1000);
       await myLearningBtn.click();
     }
 
@@ -67,7 +67,7 @@ export class HeaderOfAnyPage {
 
   async clickLiveButton() {
     let liveBtn = this.page.getByRole("link", { name: "Live", exact: true });
-    await this.page.waitForTimeout(1000);
+    await this.page.waitForTimeout(2000);
     await liveBtn.click();
   }
 
@@ -80,14 +80,16 @@ export class HeaderOfAnyPage {
       .locator('[class*="headingLink_"]')
       .filter({ hasText: "Educator Hub" });
 
-    await this.page.waitForTimeout(1000);
     if (await educatorHubBtn.isVisible()) {
+      await this.page.waitForTimeout(1000);
       await educatorHubBtn.click();
     } else {
       educatorHubBtn = this.page.getByRole("button", { name: "For Educators" });
+      await this.page.waitForTimeout(1000);
       await educatorHubBtn.click();
 
       await this.page.waitForLoadState("load");
+      await this.page.waitForTimeout(1000);
       await accessNowBtn.click();
       await this.page.waitForURL(`${BASE_URL}/educators`);
     }
@@ -99,9 +101,11 @@ export class HeaderOfAnyPage {
   async clickUserMenuButton() {
     let userMenuBtn = this.page.locator('button[aria-label="User Menu"]');
     if (await userMenuBtn.isVisible()) {
+      await this.page.waitForTimeout(1000);
       await userMenuBtn.click();
     } else {
       userMenuBtn = this.page.locator('[class="cursor-pointer"]');
+      await this.page.waitForTimeout(1000);
       await userMenuBtn.click();
     }
 

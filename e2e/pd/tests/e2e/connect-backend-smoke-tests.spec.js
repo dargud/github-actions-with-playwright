@@ -158,6 +158,7 @@ test.describe("Connected BE: Smoke with logged in user", () => {
     await expect(page).toHaveURL(`${BASE_URL}`);
 
     // Work with the login iFrame:
+    await page.waitForTimeout(1000);
     if (await app.tutorial.welcomeScreen.isVisible()) {
       await app.tutorial.clickDismissButton();
     }
@@ -165,6 +166,7 @@ test.describe("Connected BE: Smoke with logged in user", () => {
     await app.loginView.login(user);
     await app.homePage.isLoggedin();
 
+    await page.waitForTimeout(3000);
     await page.waitForLoadState("load");
     if (await app.tutorial.welcomeScreen.isVisible()) {
       await app.tutorial.clickDismissButton();
