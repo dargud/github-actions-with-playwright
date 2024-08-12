@@ -1,20 +1,36 @@
-# Auth
-package-lock.json
-.env
+.idea
+.DS_Store
+._*
+*~
+*.exe
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+*.patch
+*.diff
+*.stackdump
+go.work
+Thumbs.db*
+ehthumbs*.db
+[Dd]esktop.ini
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+.data
+**/credentials.json
+.envrc
+backend/bin/*
+e2e/pd/node_modules
+e2e/pd/.env
+e2e/pd/test-results
+e2e/pd/playwright-report
+e2e/pd/tests/e2e/2fa-extracting-test.spec.js
+e2e/pd/Widgets/gmail-credentials.json
+e2e/pd/Widgets/gmail-token.json
+e2e/pd/tests/e2e/connect-backend-snapshot-tests.spec.js-snapshots/*darwin.png
 
-# Dependency directory
-node_modules
-yarn.lock
-yarn-error.log
-
-# Editors
-.vscode
-*.iml
-
-#results
-playwright-report
-test-results
-results.xml
-
-tsconfig.tsbuildinfo
-garbage
+# Firebase Extensions local secrets (https://firebase.google.com/docs/extensions/manifest#projectspecific)
+/extensions/*.secret.local
