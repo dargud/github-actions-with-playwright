@@ -11,11 +11,7 @@ const user = {
 };
 const tags = ["wcag22a", "wcag22aa"];
 
-/*
-  TODO_QA: delete .only from tests
-*/
-
-test.describe.only("Connected BE (not logined user): Accessibility tests", () => {
+test.describe("Connected BE (not logined user): Accessibility tests", () => {
   test("Connected BE: Home page", async ({ page }, testInfo) => {
     test.slow(); // Delete after page performance improvements
     const app = new PageManager(page);

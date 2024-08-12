@@ -9,11 +9,7 @@ const user = {
   password: USER_PASS,
 };
 
-/*
-  TODO_QA: delete .only from tests
-*/
-
-test.describe.only("Connected BE: Smoke without logged in user, common tests", () => {
+test.describe("Connected BE: Smoke without logged in user, common tests", () => {
   test.beforeEach(async ({ page }) => {
     test.slow(); // Delete after page performance improvements
     const app = new PageManager(page);
