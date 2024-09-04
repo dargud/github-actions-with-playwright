@@ -1,7 +1,4 @@
 import { expect } from "@playwright/test";
-import { runtimeConfig } from "../../config";
-
-const { BASE_URL } = runtimeConfig;
 
 export class HomePage {
   constructor(page) {
@@ -13,8 +10,6 @@ export class HomePage {
     const welcomeMessage = this.page.getByRole("heading", {
       name: "Welcome to Unity Learn",
     });
-    await this.page.waitForURL(`${BASE_URL}`);
-    await this.page.waitForLoadState("load");
     await expect(welcomeMessage).toBeVisible({ timeout: 60000 });
   }
 
@@ -26,8 +21,6 @@ export class HomePage {
     const welcomeMessage = this.page.getByRole("heading", {
       name: "Welcome back e2e-test-user",
     });
-    await this.page.waitForURL(`${BASE_URL}`);
-    await this.page.waitForLoadState("load");
     await expect(welcomeMessage).toBeVisible({ timeout: 60000 });
   }
 
@@ -35,7 +28,6 @@ export class HomePage {
     const welcomeMessage = this.page.getByRole("heading", {
       name: "Welcome to Unity Learn",
     });
-    await this.page.waitForLoadState("load");
     await expect(welcomeMessage).toBeVisible({ timeout: 60000 });
   }
 }

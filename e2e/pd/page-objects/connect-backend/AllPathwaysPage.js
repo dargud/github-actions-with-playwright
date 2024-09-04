@@ -14,18 +14,18 @@ export class AllPathwaysPage {
 
   async isPageDisplayed() {
     await this.page.waitForURL(`${BASE_URL}/pathways`);
-    await this.page.waitForLoadState("load");
+    await this.page.waitForLoadState("domcontentloaded");
     await expect(this.pathWayCard).toBeVisible({ timeout: 60000 });
   }
 
   async openPathway() {
-    await this.page.waitForTimeout(500);
+    await this.page.waitForTimeout(1000);
     await this.pathWayCard.click();
   }
 
   async isPathwayDisplayed() {
     await this.page.waitForURL(`${BASE_URL}/pathway/**`);
-    await this.page.waitForLoadState("load");
+    await this.page.waitForLoadState("domcontentloaded");
     await expect(this.pathWayContent).toBeVisible({ timeout: 60000 });
   }
 }

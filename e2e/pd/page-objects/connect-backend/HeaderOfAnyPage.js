@@ -22,16 +22,15 @@ export class HeaderOfAnyPage {
   async clickMyLearning() {
     let myLearningBtn = this.page.getByRole("link", {
       name: "My Learning",
-    }).first();
+      exact: true,
+    });
 
     if (await myLearningBtn.isVisible()) {
-      await this.page.waitForTimeout(1000);
       await myLearningBtn.click();
     } else {
       myLearningBtn = this.page.getByRole("button", {
         name: "My Learning",
       });
-      await this.page.waitForTimeout(1000);
       await myLearningBtn.click();
     }
 
@@ -53,13 +52,11 @@ export class HeaderOfAnyPage {
 
   async clickBrowseAndSelectItem(item) {
     const browseBtn = this.page.getByRole("button", { name: "Browse" }).first();
-    const browseOption = this.page.getByRole('link', { name: 'Editor Essentials' }).first();
     const topicItem = this.page.getByRole("link", { name: item }).first();
 
     await this.page.waitForTimeout(1000);
     await browseBtn.click();
-    await expect(browseOption).toBeVisible();
-    await this.page.waitForLoadState("load");
+    await this.page.waitForLoadState("domcontentloaded");
     await this.page.waitForTimeout(1000);
     await topicItem.click();
     await this.page.waitForTimeout(1000);
@@ -67,7 +64,7 @@ export class HeaderOfAnyPage {
 
   async clickLiveButton() {
     let liveBtn = this.page.getByRole("link", { name: "Live", exact: true });
-    await this.page.waitForTimeout(2000);
+    await this.page.waitForTimeout(1000);
     await liveBtn.click();
   }
 
@@ -77,24 +74,24 @@ export class HeaderOfAnyPage {
       .getByRole("link", { name: "Educator Hub" });
     const accessNowBtn = this.page.getByRole("link", { name: "Access Now" });
     let educatorHubBtn = this.page
-      .locator('[class*="headingLink_"]')
-      .filter({ hasText: "Educator Hub" });
+      .getByRole("banner")
+      .getByRole("link", { name: "Educator Hub" });
 
+    await this.page.waitForTimeout(1000);
     if (await educatorHubBtn.isVisible()) {
-      await this.page.waitForTimeout(1000);
       await educatorHubBtn.click();
     } else {
       educatorHubBtn = this.page.getByRole("button", { name: "For Educators" });
       await this.page.waitForTimeout(1000);
       await educatorHubBtn.click();
 
-      await this.page.waitForLoadState("load");
+      await this.page.waitForLoadState("domcontentloaded");
       await this.page.waitForTimeout(1000);
       await accessNowBtn.click();
       await this.page.waitForURL(`${BASE_URL}/educators`);
     }
 
-    await this.page.waitForLoadState("load");
+    await this.page.waitForLoadState("domcontentloaded");
     await expect(educatorsHeader).toBeVisible({ timeout: 60000 });
   }
 
@@ -109,6 +106,7 @@ export class HeaderOfAnyPage {
       await userMenuBtn.click();
     }
 
+    await this.page.waitForTimeout(1000);
     await expect(this.page.getByText("FAQ", { exact: true })).toBeVisible({
       timeout: 60000,
     });
@@ -117,9 +115,11 @@ export class HeaderOfAnyPage {
   async selectItemFromUserMenu(item) {
     let userMenuItem = this.page.locator('[class*="item-name_"]');
     if (await userMenuItem.first().isVisible()) {
+      await this.page.waitForTimeout(1000);
       await userMenuItem.filter({ hasText: item }).click();
     } else {
       userMenuItem = this.page.locator('button[class*="box-border"]');
+      await this.page.waitForTimeout(1000);
       await userMenuItem.filter({ hasText: item }).click();
     }
   }

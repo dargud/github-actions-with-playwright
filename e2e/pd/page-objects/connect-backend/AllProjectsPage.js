@@ -12,18 +12,18 @@ export class AllProjectsPage {
 
   async isPageDisplayed() {
     await this.page.waitForURL(`${BASE_URL}/projects`);
-    await this.page.waitForLoadState("load");
+    await this.page.waitForLoadState("domcontentloaded");
     await expect(this.projectCard).toBeVisible({ timeout: 60000 });
   }
 
   async openProject() {
-    await this.page.waitForTimeout(500);
+    await this.page.waitForTimeout(1000);
     await this.projectCard.click();
   }
 
   async isProjectDisplayed() {
     await this.page.waitForURL(`${BASE_URL}/project/**`);
-    await this.page.waitForLoadState("load");
+    await this.page.waitForLoadState("domcontentloaded");
     await expect(this.projectContent).toBeVisible({ timeout: 60000 });
   }
 }

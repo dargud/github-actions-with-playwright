@@ -12,18 +12,18 @@ export class AllCoursesPage {
 
   async isPageDisplayed() {
     await this.page.waitForURL(`${BASE_URL}/courses`);
-    await this.page.waitForLoadState("load");
+    await this.page.waitForLoadState("domcontentloaded");
     await expect(this.courseCard).toBeVisible({ timeout: 60000 });
   }
 
   async openCourse() {
-    await this.page.waitForTimeout(500);
+    await this.page.waitForTimeout(1000);
     await this.courseCard.click();
   }
 
   async isCourseDisplayed() {
     await this.page.waitForURL(`${BASE_URL}/course/**`);
-    await this.page.waitForLoadState("load");
+    await this.page.waitForLoadState("domcontentloaded");
     await expect(this.courseContentItem).toBeVisible({ timeout: 60000 });
   }
 }

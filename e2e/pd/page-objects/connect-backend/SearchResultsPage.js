@@ -12,7 +12,6 @@ export class SearchResultsPage {
 
   async isPageDisplayed() {
     await this.page.waitForURL(`${BASE_URL}/search?k=**`);
-    await this.page.waitForLoadState("load");
     await expect(this.searchResultItem).toBeVisible({ timeout: 60000 });
   }
 

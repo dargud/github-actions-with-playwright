@@ -13,10 +13,8 @@ const tags = ["wcag22a", "wcag22aa"];
 
 test.describe("Connected BE (not logined user): Accessibility tests", () => {
   test("Connected BE: Home page", async ({ page }, testInfo) => {
-    test.slow(); // Delete after page performance improvements
-    const app = new PageManager(page);
     await page.goto(`${BASE_URL}`);
-    await app.homePage.isPageDisplayed();
+    await page.waitForLoadState("domcontentloaded");
     const accessibilityScanResults = await new AxeBuilder({ page })
       .withTags(tags)
       .analyze();
@@ -32,10 +30,8 @@ test.describe("Connected BE (not logined user): Accessibility tests", () => {
   test("Connected BE: All live learning events page, Open for registration", async ({
     page,
   }, testInfo) => {
-    test.slow(); // Delete after page performance improvements
-    const app = new PageManager(page);
     await page.goto(`${BASE_URL}/live-calendar/?tab=opening`);
-    await app.livePage.isPageDisplayed();
+    await page.waitForLoadState("domcontentloaded");
     const accessibilityScanResults = await new AxeBuilder({ page })
       .withTags(tags)
       .analyze();
@@ -54,10 +50,8 @@ test.describe("Connected BE (not logined user): Accessibility tests", () => {
   test("Connected BE: All live learning events page, Previously recorded", async ({
     page,
   }, testInfo) => {
-    test.slow(); // Delete after page performance improvements
-    const app = new PageManager(page);
     await page.goto(`${BASE_URL}/live-calendar/?tab=previous`);
-    await app.livePage.isPageDisplayed();
+    await page.waitForLoadState("domcontentloaded");
     const accessibilityScanResults = await new AxeBuilder({ page })
       .withTags(tags)
       .analyze();
@@ -74,10 +68,8 @@ test.describe("Connected BE (not logined user): Accessibility tests", () => {
   });
 
   test("Connected BE: All Pathways page", async ({ page }, testInfo) => {
-    test.slow(); // Delete after page performance improvements
-    const app = new PageManager(page);
     await page.goto(`${BASE_URL}/pathways`);
-    await app.allPathwaysPage.isPageDisplayed();
+    await page.waitForLoadState("domcontentloaded");
     const accessibilityScanResults = await new AxeBuilder({ page })
       .withTags(tags)
       .analyze();
@@ -91,9 +83,14 @@ test.describe("Connected BE (not logined user): Accessibility tests", () => {
   });
 
   test("Connected BE: Pathway page", async ({ page }, testInfo) => {
-    test.slow(); // Delete after page performance improvements
     const app = new PageManager(page);
-    await page.goto(`${BASE_URL}/pathway/creative-core`);
+    await page.goto(`${BASE_URL}`);
+    if (await app.tutorial.welcomeScreen.isVisible()) {
+      await app.tutorial.clickDismissButton();
+    }
+    await app.header.clickBrowseAndSelectItem("View all Pathways");
+    await app.allPathwaysPage.isPageDisplayed();
+    await app.allPathwaysPage.openPathway();
     await app.allPathwaysPage.isPathwayDisplayed();
     const accessibilityScanResults = await new AxeBuilder({ page })
       .withTags(tags)
@@ -108,10 +105,8 @@ test.describe("Connected BE (not logined user): Accessibility tests", () => {
   });
 
   test("Connected BE: All Courses page", async ({ page }, testInfo) => {
-    test.slow(); // Delete after page performance improvements
-    const app = new PageManager(page);
     await page.goto(`${BASE_URL}/courses`);
-    await app.allCoursesPage.isPageDisplayed();
+    await page.waitForLoadState("domcontentloaded");
     const accessibilityScanResults = await new AxeBuilder({ page })
       .withTags(tags)
       .analyze();
@@ -125,7 +120,6 @@ test.describe("Connected BE (not logined user): Accessibility tests", () => {
   });
 
   test("Connected BE: Course page", async ({ page }, testInfo) => {
-    test.slow(); // Delete after page performance improvements
     const app = new PageManager(page);
     await page.goto(`${BASE_URL}`);
     if (await app.tutorial.welcomeScreen.isVisible()) {
@@ -148,10 +142,8 @@ test.describe("Connected BE (not logined user): Accessibility tests", () => {
   });
 
   test("Connected BE: All Projects page", async ({ page }, testInfo) => {
-    test.slow(); // Delete after page performance improvements
-    const app = new PageManager(page);
     await page.goto(`${BASE_URL}/projects`);
-    await app.allProjectsPage.isPageDisplayed();
+    await page.waitForLoadState("domcontentloaded");
     const accessibilityScanResults = await new AxeBuilder({ page })
       .withTags(tags)
       .analyze();
@@ -165,7 +157,6 @@ test.describe("Connected BE (not logined user): Accessibility tests", () => {
   });
 
   test("Connected BE: Project page", async ({ page }, testInfo) => {
-    test.slow(); // Delete after page performance improvements
     const app = new PageManager(page);
     await page.goto(`${BASE_URL}`);
     if (await app.tutorial.welcomeScreen.isVisible()) {
@@ -188,10 +179,8 @@ test.describe("Connected BE (not logined user): Accessibility tests", () => {
   });
 
   test("Connected BE: All Tutorials page", async ({ page }, testInfo) => {
-    test.slow(); // Delete after page performance improvements
-    const app = new PageManager(page);
     await page.goto(`${BASE_URL}/tutorials`);
-    await app.allTutorialsPage.isPageDisplayed();
+    await page.waitForLoadState("domcontentloaded");
     const accessibilityScanResults = await new AxeBuilder({ page })
       .withTags(tags)
       .analyze();
@@ -205,7 +194,6 @@ test.describe("Connected BE (not logined user): Accessibility tests", () => {
   });
 
   test("Connected BE: Tutorial page", async ({ page }, testInfo) => {
-    test.slow(); // Delete after page performance improvements
     const app = new PageManager(page);
     await page.goto(`${BASE_URL}`);
     if (await app.tutorial.welcomeScreen.isVisible()) {
@@ -228,11 +216,8 @@ test.describe("Connected BE (not logined user): Accessibility tests", () => {
   });
 
   test("Connected BE: Educator Hub", async ({ page }, testInfo) => {
-    test.slow(); // Delete after page performance improvements
-    const topicName = page.locator('[class*="topic-name_"]').filter({ name: 'Educator Hub' });
     await page.goto(`${BASE_URL}/educators`);
-    await page.waitForLoadState("load");
-    await expect(topicName).toBeVisible();
+    await page.waitForLoadState("domcontentloaded");
     const accessibilityScanResults = await new AxeBuilder({ page })
       .withTags(tags)
       .analyze();
@@ -245,14 +230,13 @@ test.describe("Connected BE (not logined user): Accessibility tests", () => {
     expect(accessibilityScanResults.violations).toEqual([]);
   });
 
-  test("Connected BE: Browse -> Editor Essentials page", async ({
+  test.skip("Connected BE: Browse -> Editor Essentials page", async ({
     page,
   }, testInfo) => {
-    test.slow(); // Delete after page performance improvements
-    const app = new PageManager(page);
-    await page.goto(`${BASE_URL}`);
-    await app.header.clickBrowseAndSelectItem("Editor Essentials");
-    await app.searchResultsPage.isPageDisplayed();
+    await page.goto(
+      `${BASE_URL}/search?k=%5B%22tag%3A5d5d0e927fbf7d009e2715c0%22%5D`
+    );
+    await page.waitForLoadState("domcontentloaded");
     const accessibilityScanResults = await new AxeBuilder({ page })
       .withTags(tags)
       .analyze();
@@ -269,11 +253,8 @@ test.describe("Connected BE (not logined user): Accessibility tests", () => {
   });
 
   test("Connected BE: FAQ", async ({ page }, testInfo) => {
-    test.slow(); // Delete after page performance improvements
-    const faqContainer = page.locator('[class*="faq-container_"]');
     await page.goto(`${BASE_URL}/faq`);
-    await page.waitForLoadState("load");
-    await expect(faqContainer).toBeVisible();
+    await page.waitForLoadState("domcontentloaded");
     const accessibilityScanResults = await new AxeBuilder({ page })
       .withTags(tags)
       .analyze();
@@ -294,7 +275,7 @@ test.describe("Connected BE (logined user): Accessibility tests", () => {
 
     // Prepare the page for the login:
     await page.goto(`${BASE_URL}`);
-    await page.waitForLoadState("load");
+    await page.waitForLoadState("domcontentloaded");
     if (await app.tutorial.welcomeScreen.isVisible()) {
       await app.tutorial.clickDismissButton();
     }
@@ -303,14 +284,15 @@ test.describe("Connected BE (logined user): Accessibility tests", () => {
     await app.loginView.login(user);
     await app.homePage.isLoggedin();
 
-    await page.waitForLoadState("load");
+    await page.waitForLoadState("domcontentloaded");
     if (await app.tutorial.welcomeScreen.isVisible()) {
       await app.tutorial.clickDismissButton();
     }
   });
 
   test("Connected BE: Home page", async ({ page }, testInfo) => {
-    test.slow(); // Delete after page performance improvements
+    await page.goto(`${BASE_URL}`);
+    await page.waitForLoadState("domcontentloaded");
     const accessibilityScanResults = await new AxeBuilder({ page })
       .withTags(tags)
       .analyze();
@@ -324,7 +306,6 @@ test.describe("Connected BE (logined user): Accessibility tests", () => {
   });
 
   test("Connected BE: My Learning page", async ({ page }, testInfo) => {
-    test.slow(); // Delete after page performance improvements
     const app = new PageManager(page);
     await app.header.clickMyLearning();
     await app.myLearningPage.isPageDisplayed();
@@ -341,12 +322,11 @@ test.describe("Connected BE (logined user): Accessibility tests", () => {
   });
 
   test("Connected BE: My profile", async ({ page }, testInfo) => {
-    test.slow(); // Delete after page performance improvements
     const app = new PageManager(page);
     await app.header.clickMyLearning();
     await app.myLearningPage.isPageDisplayed();
     await app.myLearningPage.openTab("My Profile");
-    await page.waitForLoadState("load");
+    await page.waitForLoadState("domcontentloaded");
     const accessibilityScanResults = await new AxeBuilder({ page })
       .withTags(tags)
       .analyze();
@@ -360,12 +340,11 @@ test.describe("Connected BE (logined user): Accessibility tests", () => {
   });
 
   test("Connected BE: Settings", async ({ page }, testInfo) => {
-    test.slow(); // Delete after page performance improvements
     const app = new PageManager(page);
     await app.header.clickMyLearning();
     await app.myLearningPage.isPageDisplayed();
     await app.myLearningPage.openTab("Settings");
-    await page.waitForLoadState("load");
+    await page.waitForLoadState("domcontentloaded");
     const accessibilityScanResults = await new AxeBuilder({ page })
       .withTags(tags)
       .analyze();

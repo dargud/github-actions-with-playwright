@@ -4,7 +4,7 @@ import "dotenv/config";
 export default defineConfig({
   timeout: 60000,
   testDir: "tests/e2e",
-  // forbidOnly: !!process.env.CI,
+  forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
   //   workers: process.env.CI ? 1 : 4,
   reporter: "html",

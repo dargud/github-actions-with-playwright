@@ -9,8 +9,8 @@ export class LivePage {
   }
 
   async isPageDisplayed() {
-    await this.page.waitForURL(`${BASE_URL}/live-calendar**`);
-    await this.page.waitForLoadState("load");
+    await this.page.waitForURL(`${BASE_URL}/live-calendar`);
+    await this.page.waitForLoadState("domcontentloaded");
     await expect(this.page.locator("h1")).toContainText("Learn from experts");
   }
 }

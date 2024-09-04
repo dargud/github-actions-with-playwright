@@ -16,7 +16,7 @@ test.describe("Connected BE: Smoke without logged in user, common tests", () => 
 
     // Prepare the page for tests:
     await page.goto(`${BASE_URL}`);
-    await page.waitForLoadState("load");
+    await page.waitForLoadState("domcontentloaded");
     await expect(page).toHaveURL(`${BASE_URL}`);
 
     // Close the Tutorial
@@ -28,11 +28,20 @@ test.describe("Connected BE: Smoke without logged in user, common tests", () => 
   });
 
   test.afterEach(async ({ page }) => {
+    await page.waitForTimeout(1000);
     await page.close();
   });
 
   test("User can open the main page", async ({ page }) => {
     // Covered by beforeEach hook
+  });
+
+  test("User can open the User menu", async ({ page }) => {
+    test.slow(); // Delete after page performance improvements
+    const app = new PageManager(page);
+
+    // Open User menu
+    await app.header.clickUserMenuButton();
   });
 
   test("User can see the login view", async ({ page }) => {
@@ -44,22 +53,7 @@ test.describe("Connected BE: Smoke without logged in user, common tests", () => 
     await app.header.clickUserMenuButton();
     await page.waitForTimeout(1000);
     await app.header.selectItemFromUserMenu("Sign In");
-    // await page.waitForTimeout(3000);
-    // await expect(
-    //   page
-    //     .frameLocator('[id="__next"] iframe')
-    //     .getByText("Sign into your Unity ID")
-    // ).toBeVisible();
     await app.loginView.isLoginViewDisplayed();
-  });
-
-  test("User can open the User menu", async ({ page }) => {
-    test.slow(); // Delete after page performance improvements
-    // const onHeader = new HeaderOfAnyPage(page);
-    const app = new PageManager(page);
-
-    // Open User menu
-    await app.header.clickUserMenuButton();
   });
 
   test("User can open Pathways page", async ({ page }) => {
@@ -117,7 +111,7 @@ test.describe("Connected BE: Smoke without logged in user, */learn only", () => 
 
     // Prepare the page for tests:
     await page.goto(`${BASE_URL}`);
-    await page.waitForLoadState("load");
+    await page.waitForLoadState("domcontentloaded");
     await expect(page).toHaveURL(`${BASE_URL}`);
   });
 
@@ -154,11 +148,10 @@ test.describe("Connected BE: Smoke with logged in user", () => {
 
     // Prepare the page for the login:
     await page.goto(`${BASE_URL}`);
-    await page.waitForLoadState("load");
+    await page.waitForLoadState("domcontentloaded");
     await expect(page).toHaveURL(`${BASE_URL}`);
 
     // Work with the login iFrame:
-    await page.waitForTimeout(1000);
     if (await app.tutorial.welcomeScreen.isVisible()) {
       await app.tutorial.clickDismissButton();
     }
@@ -166,8 +159,7 @@ test.describe("Connected BE: Smoke with logged in user", () => {
     await app.loginView.login(user);
     await app.homePage.isLoggedin();
 
-    await page.waitForTimeout(3000);
-    await page.waitForLoadState("load");
+    await page.waitForLoadState("domcontentloaded");
     if (await app.tutorial.welcomeScreen.isVisible()) {
       await app.tutorial.clickDismissButton();
     }
